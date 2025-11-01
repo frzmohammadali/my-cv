@@ -1,0 +1,62 @@
+
+body {
+	padding: 2rem;
+	font-family: -apple-system, BlinkMacSystemFont, "Arial", sans-serif;
+	scroll-behavior: smooth;
+}
+
+.cert-thumbnail {
+    transition: transform 0.3s ease;
+    cursor: pointer;
+}
+
+.cert-thumbnail:hover {
+    transform: scale(1.02);
+}
+
+/* Modal animation */
+#certModal {
+    opacity: 0;
+    transition: opacity 0.3s ease;
+    display: flex !important;
+}
+
+#certModal:not(.hidden) {
+    opacity: 1;
+}
+
+.dropdown-menu {
+    opacity: 0;
+    transform: translateY(-10px);
+    transition: all 0.2s ease;
+    pointer-events: none;
+}
+
+.group:hover .dropdown-menu {
+    opacity: 1;
+    transform: translateY(0);
+    pointer-events: auto;
+}
+h1 {
+	font-size: 16px;
+	margin-top: 0;
+}
+
+p {
+	color: rgb(107, 114, 128);
+	font-size: 15px;
+	margin-bottom: 10px;
+	margin-top: 5px;
+}
+
+.card {
+	max-width: 620px;
+	margin: 0 auto;
+	padding: 16px;
+	border: 1px solid lightgray;
+	border-radius: 16px;
+}
+
+.card p:last-child {
+	margin-bottom: 0;
+}

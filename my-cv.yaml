@@ -1,0 +1,98 @@
+intro: Results-driven DevOps Engineer with a Master's in Computer Science and 8+ years of experience in cloud architecture, Azure, AWS, CI/CD and Kubernetes. Proven ability to lead production releases and automate infrastructure. Expertise in end-to-end pipeline creation, containerization, and proactive monitoring to drive successful project outcomes.
+
+personal_info:
+  name: Mohammadali Forouzesh
+  birthday: October 1995
+  email: frz.mohammadali.me@gmail.com
+  website: https://frzmohammadali.github.io/my-cv
+  Mobile: +49 178 279 3159
+  address: Germany
+
+main_skills:
+- CI/CD Pipeline Design & Automation
+- Kubernetes & Docker Containerization
+- Microsoft Azure Cloud Services
+- PowerShell & Bash Scripting
+- Linux & Windows Administration
+- Networking, Firewalls & Security
+- Infrastructure as Code (Terraform)
+- Helm Charts & Application Packaging
+- GitHub, GitLab & Azure DevOps
+- Python & C# Development
+- CLI Tools & Web Development
+- Prometheus, Grafana & Monitoring
+- ServiceNow & Splunk
+- CyberArk & Ethical Hacking
+- Wireshark & Network Analysis
+- NginX & Cloudflare
+- Generative AI & Prompt Engineering
+- Requirements Engineering
+- Elasticsearch, Kibana & Data Visualization
+- GraphQL & RESTful API Design
+- Cloud Engineering & Microservices Architecture
+
+certifications:
+- Microsoft Certified DevOps Engineer Expert (AZ-400) | https://learn.microsoft.com/api/credentials/share/en-us/frzmohammadali/EB3F2D333BEF8965?sharingId=2F3C9C12AFDB9F4F
+- Microsoft Certified Azure Solutions Architect Expert (AZ-305) | https://learn.microsoft.com/api/credentials/share/en-us/frzmohammadali/98F753BF56B49B5F?sharingId=2F3C9C12AFDB9F4F
+- Microsoft Certified Azure Administrator Associate (AZ-104) | https://learn.microsoft.com/api/credentials/share/en-us/frzmohammadali/725F86BE587462F7?sharingId=2F3C9C12AFDB9F4F
+- Microsoft Certified Azure Fundamentals (AZ-900) | https://learn.microsoft.com/api/credentials/share/en-us/frzmohammadali/77DE12DF9C2B8514?sharingId=2F3C9C12AFDB9F4F
+- HCL Technologies Certified DevSecOps and SRE Associate
+- HCL Technologies Certified Gen AI Prompt Engineering
+- HCL Technologies Certified AI & Gen AI Fundamentals
+- NDC conferences workshop GraphQL API - Porto 2022
+
+
+experience:
+- title: Lead DevOps Engineer | Euroclear | Brussels, Belgium (Remote)
+  timeframe: 2023 to Present
+  achievements:
+  - Designed and managed 10+ CI/CD pipelines in Azure DevOps for diverse application teams.
+  - Developed and maintained 5+ Infrastructure as Code (IaC) repositories using Terraform.
+  - Authored 20+ PowerShell scripts to automate operational tasks and deployments.
+  - Implemented automated monitoring, alerting, and log analysis for proactive system management.
+  - Led and participated in 15+ production release and launch cycles.
+  - Facilitated post-incident reviews and root cause analysis meetings.
+
+- title: Project Lead & Senior DevOps Consultant | HCL Technologies | Frankfurt, Germany (Remote)
+  timeframe: 2023 to Present
+  achievements:
+  - Consulted as a Senior DevOps expert for client Euroclear, driving key project deliveries.
+  - Delivered on infrastructure automation, CI/CD, and monitoring solutions as outlined above.
+
+- title: Senior Software Engineer | matelso GmbH | Kaiserslautern, Germany
+  timeframe: 2021 to 2023
+  achievements:
+  - Architected and maintained core backend GraphQL APIs for a SaaS platform.
+  - Developed and enhanced 10+ microservices using .NET.
+  - Engineered and maintained 10+ CI/CD pipelines for automated testing and deployment.
+  - Created robust automation scripts in Bash and PowerShell.
+  - Containerized and deployed 10+ services on a Kubernetes cluster.
+  - Established monitoring, logging, and alerting systems for Kubernetes infrastructure.
+  - Performed cluster maintenance, troubleshooting, and Linux server administration.
+
+- title: Software Engineer & Research Assistant | Max Planck Institute | Kaiserslautern, Germany
+  timeframe: 2018 to 2020
+  achievements:
+  - Developed interactive data visualization dashboards using Python and web technologies.
+  - Contributed Python code to the global data anonymization project "gda-score.org".
+  - Maintained a part-time schedule (20 hrs/week) while completing a Master's degree.
+
+education:
+- title:  M.Sc. Computer Science | Rheinland-Pfälzische Technische Universität (RPTU) | Kaiserslautern, Germany
+  grade: 2.0
+  timeframe: 2018 to 2021
+- title: B.Eng. Computer Software Engineering | Azad University | Tehran, Iran
+  grade: 1.5
+  timeframe: 2013 to 2017
+
+language_and_soft_skills:
+- English (Fluent)
+- German (Limited Working Proficiency)
+- Persian/Farsi (Native)
+- Team Collaboration & Cross-Functional Teamwork
+- Results-Oriented & Goal-Driven
+- Accountability & Proactive Problem-Solving
+- Strategic & Holistic Project View
+- Root Cause Analysis & Systematic Troubleshooting
+- High Commitment to Deliverables & Deadlines
+
