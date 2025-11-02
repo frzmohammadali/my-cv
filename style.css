@@ -1,8 +1,7 @@
-
 body {
-	padding: 2rem;
-	font-family: -apple-system, BlinkMacSystemFont, "Arial", sans-serif;
-	scroll-behavior: smooth;
+    padding: 2rem;
+    font-family: -apple-system, BlinkMacSystemFont, "Arial", sans-serif;
+    scroll-behavior: smooth;
 }
 
 .cert-thumbnail {
@@ -18,11 +17,16 @@ body {
 #certModal {
     opacity: 0;
     transition: opacity 0.3s ease;
-    display: flex !important;
+    display: none !important; /* Changed from flex to none */
 }
 
 #certModal:not(.hidden) {
+    display: flex !important; /* Show when not hidden */
     opacity: 1;
+}
+
+.hidden {
+    display: none !important;
 }
 
 .dropdown-menu {
@@ -37,26 +41,136 @@ body {
     transform: translateY(0);
     pointer-events: auto;
 }
+
 h1 {
-	font-size: 16px;
-	margin-top: 0;
+    font-size: 16px;
+    margin-top: 0;
 }
 
 p {
-	color: rgb(107, 114, 128);
-	font-size: 15px;
-	margin-bottom: 10px;
-	margin-top: 5px;
+    font-size: 15px;
+    margin-bottom: 10px;
+    margin-top: 5px;
 }
 
 .card {
-	max-width: 620px;
-	margin: 0 auto;
-	padding: 16px;
-	border: 1px solid lightgray;
-	border-radius: 16px;
+    max-width: 620px;
+    margin: 0 auto;
+    padding: 16px;
+    border: 1px solid lightgray;
+    border-radius: 16px;
 }
 
 .card p:last-child {
-	margin-bottom: 0;
+    margin-bottom: 0;
+}
+
+.cert-item {
+    transition: transform 0.2s ease;
+}
+
+.cert-item:hover {
+    transform: translateX(4px);
+}
+
+.cert-thumbnail {
+    transition: transform 0.3s ease;
+    cursor: pointer;
+}
+
+.cert-thumbnail:hover {
+    transform: scale(1.05);
+}
+
+/* Ensure modal is properly positioned */
+#certModal {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    z-index: 50;
+    background: rgba(0, 0, 0, 0.8);
+    align-items: center;
+    justify-content: center;
+}
+
+/* Make sure the close button is properly positioned */
+#certModal button {
+    position: absolute;
+    top: 20px;
+    right: 20px;
+    z-index: 60;
+    background: rgba(0, 0, 0, 0.7);
+    border: none;
+    color: white;
+    border-radius: 50%;
+    width: 40px;
+    height: 40px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+}
+
+#certModal button:hover {
+    background: rgba(0, 0, 0, 0.9);
+}
+
+/* Modal content */
+#certModal .relative {
+    position: relative;
+}
+
+/* Download dropdown styles */
+#download-dropdown {
+    position: relative;
+    display: inline-block;
+}
+
+#dropdown-menu {
+    opacity: 0;
+    transform: translateY(-10px);
+    transition: all 0.3s ease;
+    pointer-events: none;
+}
+
+#dropdown-menu:not(.hidden) {
+    opacity: 1;
+    transform: translateY(0);
+    pointer-events: auto;
+}
+
+/* Mobile styles */
+@media (max-width: 768px) {
+    #dropdown-menu {
+        position: fixed;
+        top: auto;
+        left: 50%;
+        transform: translateX(-50%) translateY(-10px);
+        width: 200px;
+        z-index: 100;
+    }
+    
+    #dropdown-menu:not(.hidden) {
+        transform: translateX(-50%) translateY(0);
+    }
+    
+    /* Ensure dropdown stays on top of other content */
+    #download-dropdown {
+        z-index: 100;
+        position: relative;
+    }
+}
+
+/* Email container styles */
+.email-container {
+    transition: all 0.3s ease;
+    border: 1px solid rgba(55, 65, 81, 0.5);
+    background: rgba(31, 41, 55, 0.5) !important;
+}
+
+.email-container:hover {
+    background: rgba(55, 65, 81, 0.7) !important;
+    border-color: rgb(59, 130, 246) !important;
 }

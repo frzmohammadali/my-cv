@@ -1,7 +1,7 @@
 // Handle document ready
 document.addEventListener('DOMContentLoaded', () => {
     feather.replace();
-    
+
     // Initialize animations
     anime({
         targets: '.glass-card',
@@ -14,7 +14,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // Close modal on ESC key
     document.addEventListener('keydown', (e) => {
-        if (e.key === 'Escape' && !document.getElementById('certModal').classList.contains('hidden')) {
+        if (e.key === 'Escape') {
             hideCertImage();
         }
     });
@@ -25,21 +25,192 @@ document.addEventListener('DOMContentLoaded', () => {
             hideCertImage();
         }
     });
+
+    initDownloadDropdown();
 });
 
-// Certification modal functions
+let currentCertImage = '';
+
 function showCertImage(src) {
-    document.getElementById('certFullImage').src = src;
-    document.getElementById('certModal').classList.remove('hidden');
+    const modal = document.getElementById('certModal');
+    const image = document.getElementById('certFullImage');
+
+    currentCertImage = src;
+    image.src = src;
+    modal.classList.remove('hidden');
     document.body.style.overflow = 'hidden';
+
+    // Add fade-in effect
+    setTimeout(() => {
+        modal.style.opacity = '1';
+    }, 10);
 }
 
 function hideCertImage() {
-    document.getElementById('certModal').classList.add('hidden');
-    document.body.style.overflow = '';
+    const modal = document.getElementById('certModal');
+    modal.style.opacity = '0';
+
+    setTimeout(() => {
+        modal.classList.add('hidden');
+        document.body.style.overflow = '';
+    }, 300);
 }
 
 // Smooth scroll to contact form
 function smoothScrollToContact() {
-    document.getElementById('contact').scrollIntoView({behavior: 'smooth'});
+    document.getElementById('contact').scrollIntoView({ behavior: 'smooth' });
+}
+
+function initDownloadDropdown() {
+    const dropdownButton = document.querySelector('#download-dropdown button');
+    const dropdownMenu = document.getElementById('dropdown-menu');
+
+    if (dropdownButton && dropdownMenu) {
+        // Toggle dropdown on click (for mobile)
+        dropdownButton.addEventListener('click', (e) => {
+            e.preventDefault();
+            const isHidden = dropdownMenu.classList.contains('hidden');
+
+            // Close all other open dropdowns
+            closeAllDropdowns();
+
+            if (isHidden) {
+                dropdownMenu.classList.remove('hidden');
+                // Add click outside listener
+                setTimeout(() => {
+                    document.addEventListener('click', closeDropdownOnClickOutside);
+                }, 10);
+            }
+        });
+
+        // Keep dropdown open when hovering over it
+        dropdownMenu.addEventListener('mouseenter', () => {
+            dropdownMenu.classList.remove('hidden');
+        });
+
+        dropdownMenu.addEventListener('mouseleave', () => {
+            // Only hide on mouseleave if not on mobile
+            if (!isMobile()) {
+                dropdownMenu.classList.add('hidden');
+            }
+        });
+    }
+}
+
+function closeAllDropdowns() {
+    const dropdowns = document.querySelectorAll('#dropdown-menu');
+    dropdowns.forEach(dropdown => {
+        dropdown.classList.add('hidden');
+    });
+    // Remove any existing click listeners
+    document.removeEventListener('click', closeDropdownOnClickOutside);
+}
+
+function closeDropdownOnClickOutside(e) {
+    const dropdown = document.getElementById('dropdown-menu');
+    const dropdownButton = document.querySelector('#download-dropdown button');
+
+    if (dropdown && dropdownButton &&
+        !dropdown.contains(e.target) &&
+        !dropdownButton.contains(e.target)) {
+        dropdown.classList.add('hidden');
+        document.removeEventListener('click', closeDropdownOnClickOutside);
+    }
+}
+
+function isMobile() {
+    return window.innerWidth <= 768;
+}
+
+// Close dropdown when window is resized
+window.addEventListener('resize', () => {
+    if (!isMobile()) {
+        closeAllDropdowns();
+    }
+});
+
+
+// Email protection against bots
+document.addEventListener('DOMContentLoaded', () => {
+    const part1 = 'frz.mohammadali.me';
+    const part2 = 'gmail.com';
+    const fullEmail = part1 + '@' + part2;
+
+    // Set the email text content
+    document.getElementById('email-part1').textContent = part1;
+    document.getElementById('email-part2').textContent = part2;
+
+    // Make it clickable for real users
+    const emailContainer = document.querySelector('.email-container');
+    if (emailContainer) {
+        emailContainer.style.cursor = 'pointer';
+        emailContainer.title = 'Click to copy email address';
+
+        emailContainer.addEventListener('click', async () => {
+            try {
+                await navigator.clipboard.writeText(fullEmail);
+                showCopyFeedback(emailContainer, true);
+            } catch (err) {
+                // Fallback for older browsers
+                fallbackCopyText(fullEmail, emailContainer);
+            }
+        });
+
+        // Add hover effects
+        emailContainer.addEventListener('mouseenter', () => {
+            emailContainer.style.transform = 'translateY(-2px)';
+            emailContainer.style.borderColor = 'rgb(59, 130, 246)';
+            emailContainer.style.boxShadow = '0 10px 15px -3px rgba(0, 0, 0, 0.1)';
+        });
+
+        emailContainer.addEventListener('mouseleave', () => {
+            emailContainer.style.transform = 'translateY(0)';
+            emailContainer.style.borderColor = '';
+            emailContainer.style.boxShadow = '';
+        });
+    }
+});
+
+function showCopyFeedback(container, success) {
+    const originalContent = container.innerHTML;
+    if (success) {
+        container.innerHTML = '<span class="text-green-400 flex items-center justify-center gap-2"><i data-feather="check" class="w-4 h-4"></i>Copied to clipboard!</span>';
+    } else {
+        container.innerHTML = '<span class="text-red-400 flex items-center justify-center gap-2"><i data-feather="x" class="w-4 h-4"></i>Copy failed</span>';
+    }
+    feather.replace();
+
+    setTimeout(() => {
+        // Restore original content with the copy icon
+        container.innerHTML = `
+            <span id="email-part1">frz.mohammadali.me</span>
+            <span>@</span>
+            <span id="email-part2">gmail.com</span>
+            <i data-feather="copy" class="w-4 h-4 ml-2 text-gray-400 group-hover:text-blue-400 transition-colors duration-200"></i>
+        `;
+        feather.replace();
+    }, 2000);
+}
+
+function fallbackCopyText(text, container) {
+    const textArea = document.createElement('textarea');
+    textArea.value = text;
+    textArea.style.position = 'fixed';
+    textArea.style.opacity = '0';
+    document.body.appendChild(textArea);
+
+    try {
+        textArea.select();
+        textArea.setSelectionRange(0, 99999); // For mobile devices
+        const successful = document.execCommand('copy');
+        showCopyFeedback(container, successful);
+    } catch (err) {
+        showCopyFeedback(container, false);
+        // Final fallback - show email in alert
+        setTimeout(() => {
+            alert(`Email: ${text}\n\nPlease copy the email address manually.`);
+        }, 500);
+    } finally {
+        document.body.removeChild(textArea);
+    }
 }
