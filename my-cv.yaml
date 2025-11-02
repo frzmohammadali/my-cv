@@ -59,7 +59,7 @@ experience:
   - Consulted as a Senior DevOps expert for client Euroclear, driving key project deliveries.
   - Delivered on infrastructure automation, CI/CD, and monitoring solutions as outlined above.
 
-- title: Senior Software Engineer | matelso GmbH | Kaiserslautern, Germany
+- title: Senior Software/DevOps Engineer | matelso GmbH | Kaiserslautern, Germany
   timeframe: 2021 to 2023
   achievements:
   - Architected and maintained core backend GraphQL APIs for a SaaS platform.
@@ -96,3 +96,10 @@ language_and_soft_skills:
 - Root Cause Analysis & Systematic Troubleshooting
 - High Commitment to Deliverables & Deadlines
 
+publications:
+- title: A cleaner and more reliable DevOps routine using build automation tools 
+  link: https://dev.to/frzmohammadali/a-cleaner-and-more-reliable-devops-routine-using-build-automation-tools-590i
+- title: How the AZ-104 Exam (Azure Administrator Certificate) Looks Like - My Exam Tips and Tricks 
+  link: https://www.linkedin.com/pulse/how-az-104-exam-azure-administrator-certificate-looks-forouzesh-ban2e
+- title: How I prepare for Azure exams [Certified Azure Administrator] [AZ 104]
+  link: https://youtube.com/watch?v=D_w5ZHne4zU&si=ajN4s-TegINNcHLi

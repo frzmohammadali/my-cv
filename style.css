@@ -174,3 +174,39 @@ p {
     background: rgba(55, 65, 81, 0.7) !important;
     border-color: rgb(59, 130, 246) !important;
 }
+
+/* Publications section styles */
+.publication-item {
+    transition: transform 0.2s ease;
+}
+
+.publication-item:hover {
+    transform: translateX(4px);
+}
+
+.publication-item a {
+    transition: color 0.2s ease;
+}
+
+/* Ribbon styles */
+.ribbon-container {
+    position: absolute;
+    top: 110px;
+    left: 22px;
+    z-index: 40;
+    width: 200px;
+    transform: rotate(-45deg);
+    transform-origin: top left;
+}
+
+.ribbon-bg {
+    background: rgba(16, 185, 129, 0.8); /* Green-500 with transparency */
+    backdrop-filter: blur(4px);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    padding: 8px 40px;
+    text-align: center;
+    margin-left: -60px;
+    font-size: 0.875rem;
+    font-weight: 500;
+    color: white;
+}
