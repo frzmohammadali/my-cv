@@ -10,6 +10,22 @@
 </head>
 
 <body class="min-h-screen bg-gray-900 text-gray-100">
+    <!-- Language Selector -->
+    <div class="absolute top-12 right-1 z-50">
+        <div class="flex space-x-1 bg-gray-800/90 backdrop-blur-sm rounded-full p-1 border border-gray-600/50">
+            <button
+                class="lang-btn px-3 py-1 rounded-full text-sm font-medium transition-colors duration-200 bg-blue-500 text-white"
+                data-lang="en">
+                EN
+            </button>
+            <button
+                class="lang-btn px-3 py-1 rounded-full text-sm font-medium transition-colors duration-200 text-gray-300 bg-gray-800/50 hover:bg-blue-600 hover:text-white"
+                data-lang="de">
+                DE
+            </button>
+        </div>
+    </div>
+
     <!-- Vanta Background -->
     <div id="vanta-bg" class="vanta-bg"></div>
 
@@ -17,7 +33,7 @@
     <div class="top-banner">
         <span class="flex items-center gap-2 text-sm font-medium ml-8">
             <i data-feather="calendar" class="w-4 h-4"></i>
-            Last updated: November 2025
+            <span data-translate="last-updated">Last updated: November 2025</span>
         </span>
     </div>
 
@@ -30,51 +46,56 @@
                 class="rounded-full w-32 h-32 object-cover border-4 border-blue-400 shadow-lg mb-4">
             <h1
                 class="text-4xl font-bold text-center mb-2 bg-clip-text text-transparent bg-gradient-to-r from-blue-400 to-purple-600">
-                Mohammadali Forouzesh
+                <span data-translate="name">Mohammadali Forouzesh</span>
             </h1>
             <p class="text-xl text-blue-300 mb-4 text-center">
-                DevOps Engineer | Kubernetes Administrator | Site Reliability Engineer
+                <span data-translate="title">DevOps Engineer | Kubernetes Administrator | Site Reliability
+                    Engineer</span>
             </p>
             <div class="flex items-center justify-center gap-1 mb-4 text-gray-300 font-medium">
                 <i data-feather="file-text" class="w-3 h-3"></i>
-                Germany PR holder
+                <span data-translate="pr-status">Germany PR holder</span>
             </div>
             <div class="flex space-x-4">
                 <div class="relative group" id="download-dropdown">
                     <button
                         class="px-4 py-2 bg-blue-600 hover:bg-blue-700 rounded-full flex items-center cursor-pointer">
-                        <i data-feather="download" class="mr-2"></i> Download CV
+                        <i data-feather="download" class="mr-2"></i>
+                        <span data-translate="download-cv">Download CV</span>
                     </button>
                     <div class="absolute hidden group-hover:block bg-gray-800 rounded-lg shadow-lg mt-1 py-2 w-48 z-50"
                         id="dropdown-menu">
                         <a target="_blank" href="cv-mohammadali-forouzesh.pdf"
-                            class="block px-4 py-2 hover:bg-blue-900/30 rounded-md mx-1 transition-colors duration-200">PDF
-                            Version</a>
+                            class="block px-4 py-2 hover:bg-blue-900/30 rounded-md mx-1 transition-colors duration-200">
+                            <span data-translate="pdf-version">PDF Version</span>
+                        </a>
                         <a target="_blank" href="cv-mohammadali-forouzesh.yaml"
-                            class="block px-4 py-2 hover:bg-blue-900/30 rounded-md mx-1 transition-colors duration-200">YAML
-                            Version</a>
+                            class="block px-4 py-2 hover:bg-blue-900/30 rounded-md mx-1 transition-colors duration-200">
+                            <span data-translate="yaml-version">YAML Version</span>
+                        </a>
                     </div>
                 </div>
                 <a href="#contact"
                     class="px-4 py-2 border border-blue-400 hover:bg-blue-900/30 rounded-full flex items-center"
                     onclick="event.preventDefault(); document.getElementById('contact').scrollIntoView({behavior: 'smooth'})">
-                    <i data-feather="mail" class="mr-2"></i> Contact Me
+                    <i data-feather="mail" class="mr-2"></i>
+                    <span data-translate="contact-me">Contact Me</span>
                 </a>
             </div>
             <div class="mt-6 flex items-center justify-center gap-4 text-sm">
                 <div class="flex items-center gap-2">
-                    <span class="text-gray-400">Email:</span>
+                    <span class="text-gray-400" data-translate="email-label">Email:</span>
                     <button onclick="smoothScrollToContact()"
                         class="text-blue-400 hover:text-blue-300 transition-colors duration-200 font-medium">
-                        click to reveal!
+                        <span data-translate="click-to-reveal">click to reveal!</span>
                     </button>
                 </div>
                 <div class="w-px h-4 bg-gray-600"></div>
                 <div class="flex items-center gap-2">
-                    <span class="text-gray-400">Phone:</span>
+                    <span class="text-gray-400" data-translate="phone-label">Phone:</span>
                     <button onclick="smoothScrollToContact()"
                         class="text-blue-400 hover:text-blue-300 transition-colors duration-200 font-medium">
-                        click to reveal!
+                        <span data-translate="click-to-reveal">click to reveal!</span>
                     </button>
                 </div>
             </div>
@@ -87,9 +108,10 @@
                 <!-- About Section -->
                 <section class="glass-card rounded-xl p-6 shadow-lg">
                     <h2 class="text-2xl font-bold mb-4 flex items-center">
-                        <i data-feather="user" class="mr-2"></i> About Me
+                        <i data-feather="user" class="mr-2"></i>
+                        <span data-translate="about-me">About Me</span>
                     </h2>
-                    <p class="mb-4 text-justify">
+                    <p class="mb-4 text-justify" data-translate="about-text">
                         🚀 Results-driven DevOps Engineer with a Master's in Computer Science and 8+ years of experience
                         in cloud architecture ☁️, Azure, AWS, CI/CD and Kubernetes.
                         💪 Proven ability to lead production releases and automate infrastructure.
@@ -101,7 +123,8 @@
                 <!-- Certifications Section -->
                 <section class="glass-card rounded-xl p-6 shadow-lg">
                     <h2 class="text-2xl font-bold mb-6 flex items-center">
-                        <i data-feather="award" class="mr-2"></i> Certifications
+                        <i data-feather="award" class="mr-2"></i>
+                        <span data-translate="certifications">Certifications</span>
                     </h2>
                     <div class="space-y-4">
                         <!-- Microsoft Certifications -->
@@ -119,7 +142,8 @@
                                     <h3 class="font-semibold text-blue-300 hover:text-blue-200 flex items-center gap-2">
                                         <a href="https://learn.microsoft.com/api/credentials/share/en-us/frzmohammadali/EB3F2D333BEF8965?sharingId=2F3C9C12AFDB9F4F"
                                             target="_blank" class="hover:underline flex items-center gap-1">
-                                            Microsoft Certified DevOps Engineer Expert (AZ-400)
+                                            <span data-translate="cert-devops-azure">Microsoft Certified DevOps Engineer
+                                                Expert (AZ-400)</span>
                                             <i data-feather="external-link" class="w-4 h-4"></i>
                                         </a>
                                     </h3>
@@ -143,7 +167,8 @@
                                     <h3 class="font-semibold text-blue-300 hover:text-blue-200 flex items-center gap-2">
                                         <a href="https://learn.microsoft.com/api/credentials/share/en-us/frzmohammadali/98F753BF56B49B5F?sharingId=2F3C9C12AFDB9F4F"
                                             target="_blank" class="hover:underline flex items-center gap-1">
-                                            Microsoft Certified Azure Solutions Architect Expert (AZ-305)
+                                            <span data-translate="cert-architect-azure">Microsoft Certified Azure
+                                                Solutions Architect Expert (AZ-305)</span>
                                             <i data-feather="external-link" class="w-4 h-4"></i>
                                         </a>
                                     </h3>
@@ -167,7 +192,8 @@
                                     <h3 class="font-semibold text-blue-300 hover:text-blue-200 flex items-center gap-2">
                                         <a href="https://learn.microsoft.com/api/credentials/share/en-us/frzmohammadali/725F86BE587462F7?sharingId=2F3C9C12AFDB9F4F"
                                             target="_blank" class="hover:underline flex items-center gap-1">
-                                            Microsoft Certified Azure Administrator Associate (AZ-104)
+                                            <span data-translate="cert-admin-azure">Microsoft Certified Azure
+                                                Administrator Associate (AZ-104)</span>
                                             <i data-feather="external-link" class="w-4 h-4"></i>
                                         </a>
                                     </h3>
@@ -190,7 +216,8 @@
                                     <h3 class="font-semibold text-blue-300 hover:text-blue-200 flex items-center gap-2">
                                         <a href="https://learn.microsoft.com/api/credentials/share/en-us/frzmohammadali/77DE12DF9C2B8514?sharingId=2F3C9C12AFDB9F4F"
                                             target="_blank" class="hover:underline flex items-center gap-1">
-                                            Microsoft Certified Azure Fundamentals (AZ-900)
+                                            <span data-translate="cert-fundamentals-azure">Microsoft Certified Azure
+                                                Fundamentals (AZ-900)</span>
                                             <i data-feather="external-link" class="w-4 h-4"></i>
                                         </a>
                                     </h3>
@@ -211,7 +238,8 @@
                                     </div>
                                 </div>
                                 <div class="flex-1">
-                                    <h3 class="font-semibold text-purple-300">HCL Technologies Certified DevSecOps and
+                                    <h3 class="font-semibold text-purple-300" data-translate="cert-devsecops-hcl">HCL
+                                        Technologies Certified DevSecOps and
                                         SRE Associate</h3>
                                     <p class="text-sm text-gray-400">HCL Technologies</p>
                                 </div>
@@ -229,7 +257,8 @@
                                     </div>
                                 </div>
                                 <div class="flex-1">
-                                    <h3 class="font-semibold text-purple-300">HCL Technologies Certified Gen AI Prompt
+                                    <h3 class="font-semibold text-purple-300" data-translate="cert-prompt-hcl">HCL
+                                        Technologies Certified Gen AI Prompt
                                         Engineering</h3>
                                     <p class="text-sm text-gray-400">HCL Technologies</p>
                                 </div>
@@ -247,7 +276,8 @@
                                     </div>
                                 </div>
                                 <div class="flex-1">
-                                    <h3 class="font-semibold text-purple-300">HCL Technologies Certified AI & Gen AI
+                                    <h3 class="font-semibold text-purple-300" data-translate="cert-genai-hcl">HCL
+                                        Technologies Certified AI & Gen AI
                                         Fundamentals</h3>
                                     <p class="text-sm text-gray-400">HCL Technologies</p>
                                 </div>
@@ -266,7 +296,8 @@
                                     </div>
                                 </div>
                                 <div class="flex-1">
-                                    <h3 class="font-semibold text-green-300">NDC conferences workshop GraphQL API -
+                                    <h3 class="font-semibold text-green-300" data-translate="cert-graphql-ndc">NDC
+                                        conferences workshop GraphQL API -
                                         Porto 2022</h3>
                                     <p class="text-sm text-gray-400">NDC Conferences</p>
                                 </div>
@@ -278,56 +309,87 @@
                 <!-- Experience Section -->
                 <section class="glass-card rounded-xl p-6 shadow-lg">
                     <h2 class="text-2xl font-bold mb-6 flex items-center">
-                        <i data-feather="briefcase" class="mr-2"></i> Professional Experience
+                        <i data-feather="briefcase" class="mr-2"></i>
+                        <span data-translate="experience">Professional Experience</span>
                     </h2>
                     <div class="mb-6">
-                        <h3 class="text-xl font-semibold">Senior DevOps Engineer</h3>
-                        <p class="text-blue-300">Euroclear | Brussels, Belgium <span
-                                class="text-green-400 font-semibold">(Remote from Germany)</span> | 2023 - Present</p>
+                        <h3 class="text-xl font-semibold" data-translate="position-senior-devops">Senior DevOps Engineer
+                        </h3>
+                        <p class="text-blue-300">
+                            <span data-translate="company-euroclear">Euroclear</span> |
+                            <span data-translate="location-brussels">Brussels, Belgium</span>
+                            <span class="text-green-400 font-semibold" data-translate="remote-germany">(Remote from
+                                Germany)</span> |
+                            <span data-translate="duration-2023-present">2023 - Present</span>
+                        </p>
                         <ul class="list-disc pl-5 mt-2 space-y-1">
-                            <li>Designed and managed 10+ CI/CD pipelines in Azure DevOps for diverse application teams
-                            </li>
-                            <li>Developed and maintained 5+ Infrastructure as Code (IaC) repositories using Terraform
-                            </li>
-                            <li>Authored 20+ PowerShell scripts to automate operational tasks and deployments</li>
-                            <li>Implemented automated monitoring, alerting, and log analysis for proactive system
-                                management</li>
-                            <li>Led and participated in 15+ production release and launch cycles</li>
+                            <li data-translate="exp-euroclear-1">Designed and managed 10+ CI/CD pipelines in Azure
+                                DevOps for diverse application teams</li>
+                            <li data-translate="exp-euroclear-2">Developed and maintained 5+ Infrastructure as Code
+                                (IaC) repositories using Terraform</li>
+                            <li data-translate="exp-euroclear-3">Authored 20+ PowerShell scripts to automate operational
+                                tasks and deployments</li>
+                            <li data-translate="exp-euroclear-4">Implemented automated monitoring, alerting, and log
+                                analysis for proactive system management</li>
+                            <li data-translate="exp-euroclear-5">Led and participated in 15+ production release and
+                                launch cycles</li>
                         </ul>
                     </div>
 
                     <div class="mb-6">
-                        <h3 class="text-xl font-semibold">Project Lead & Senior DevOps Consultant</h3>
-                        <p class="text-blue-300">HCL Technologies | Frankfurt, Germany <span
-                                class="text-green-400 font-semibold">(Remote from Germany)</span> | 2023 - Present</p>
+                        <h3 class="text-xl font-semibold" data-translate="position-lead-devops">Project Lead & Senior
+                            DevOps Consultant</h3>
+                        <p class="text-blue-300">
+                            <span data-translate="company-hcl">HCL Technologies</span> |
+                            <span data-translate="location-frankfurt">Frankfurt, Germany</span>
+                            <span class="text-green-400 font-semibold" data-translate="remote-germany">(Remote from
+                                Germany)</span> |
+                            <span data-translate="duration-2023-present">2023 - Present</span>
+                        </p>
                         <ul class="list-disc pl-5 mt-2 space-y-1">
-                            <li>Consulted as a Senior DevOps expert for client Euroclear, driving key project deliveries
-                            </li>
-                            <li>Delivered infrastructure automation, CI/CD, and monitoring solutions</li>
+                            <li data-translate="exp-hcl-1">Consulted as a Senior DevOps expert for client Euroclear,
+                                driving key project deliveries</li>
+                            <li data-translate="exp-hcl-2">Delivered infrastructure automation, CI/CD, and monitoring
+                                solutions</li>
                         </ul>
                     </div>
 
                     <div class="mb-6">
-                        <h3 class="text-xl font-semibold">Senior Software/DevOps Engineer</h3>
-                        <p class="text-blue-300">matelso GmbH | Kaiserslautern, Germany <span
-                                class="text-green-400 font-semibold">(On site)</span> | 2021 - 2023</p>
+                        <h3 class="text-xl font-semibold" data-translate="position-senior-software">Senior
+                            Software/DevOps Engineer</h3>
+                        <p class="text-blue-300">
+                            <span data-translate="company-matelso">matelso GmbH</span> |
+                            <span data-translate="location-kaiserslautern">Kaiserslautern, Germany</span>
+                            <span class="text-green-400 font-semibold" data-translate="on-site">(On site)</span> |
+                            <span data-translate="duration-2021-2023">2021 - 2023</span>
+                        </p>
                         <ul class="list-disc pl-5 mt-2 space-y-1">
-                            <li>Architected and maintained core backend GraphQL APIs for a SaaS platform</li>
-                            <li>Developed and enhanced 10+ microservices using .NET</li>
-                            <li>Engineered and maintained 10+ CI/CD pipelines for automated testing and deployment</li>
-                            <li>Containerized and deployed 10+ services on a Kubernetes cluster</li>
+                            <li data-translate="exp-matelso-1">Architected and maintained core backend GraphQL APIs for
+                                a SaaS platform</li>
+                            <li data-translate="exp-matelso-2">Developed and enhanced 10+ microservices using .NET</li>
+                            <li data-translate="exp-matelso-3">Engineered and maintained 10+ CI/CD pipelines for
+                                automated testing and deployment</li>
+                            <li data-translate="exp-matelso-4">Containerized and deployed 10+ services on a Kubernetes
+                                cluster</li>
                         </ul>
                     </div>
 
                     <div>
-                        <h3 class="text-xl font-semibold">Software Engineer & Research Assistant</h3>
-                        <p class="text-blue-300">Max Planck Institute | Kaiserslautern, Germany <span
-                                class="text-green-400 font-semibold">(On site)</span> | 2018 - 2020</p>
+                        <h3 class="text-xl font-semibold" data-translate="position-research">Software Engineer &
+                            Research Assistant</h3>
+                        <p class="text-blue-300">
+                            <span data-translate="company-mpi">Max Planck Institute</span> |
+                            <span data-translate="location-kaiserslautern">Kaiserslautern, Germany</span>
+                            <span class="text-green-400 font-semibold" data-translate="on-site">(On site)</span> |
+                            <span data-translate="duration-2018-2020">2018 - 2020</span>
+                        </p>
                         <ul class="list-disc pl-5 mt-2 space-y-1">
-                            <li>Developed interactive data visualization dashboards using Python and web technologies
-                            </li>
-                            <li>Contributed Python code to the global data anonymization project "gda-score.org"</li>
-                            <li>Maintained a part-time schedule (20 hrs/week) while completing a Master's degree</li>
+                            <li data-translate="exp-mpi-1">Developed interactive data visualization dashboards using
+                                Python and web technologies</li>
+                            <li data-translate="exp-mpi-2">Contributed Python code to the global data anonymization
+                                project "gda-score.org"</li>
+                            <li data-translate="exp-mpi-3">Maintained a part-time schedule (20 hrs/week) while
+                                completing a Master's degree</li>
                         </ul>
                     </div>
                 </section>
@@ -335,7 +397,8 @@
                 <!-- Publications Section -->
                 <section class="glass-card rounded-xl p-6 shadow-lg">
                     <h2 class="text-2xl font-bold mb-6 flex items-center">
-                        <i data-feather="file-text" class="mr-2"></i> Publications & Content
+                        <i data-feather="file-text" class="mr-2"></i>
+                        <span data-translate="publications">Publications & Content</span>
                     </h2>
                     <div class="space-y-4">
                         <div class="publication-item group">
@@ -345,7 +408,8 @@
                                     <h3 class="font-semibold text-blue-300 hover:text-blue-200">
                                         <a href="https://dev.to/frzmohammadali/a-cleaner-and-more-reliable-devops-routine-using-build-automation-tools-590i"
                                             target="_blank" class="hover:underline">
-                                            A cleaner and more reliable DevOps routine using build automation tools
+                                            <span data-translate="pub-devops-routine">A cleaner and more reliable DevOps
+                                                routine using build automation tools</span>
                                         </a>
                                     </h3>
                                     <p class="text-sm text-gray-400 mt-1">DEV Community</p>
@@ -360,8 +424,8 @@
                                     <h3 class="font-semibold text-blue-300 hover:text-blue-200">
                                         <a href="https://www.linkedin.com/pulse/how-az-104-exam-azure-administrator-certificate-looks-forouzesh-ban2e"
                                             target="_blank" class="hover:underline">
-                                            How the AZ-104 Exam (Azure Administrator Certificate) Looks Like - My Exam
-                                            Tips and Tricks
+                                            <span data-translate="pub-az104">How the AZ-104 Exam (Azure Administrator
+                                                Certificate) Looks Like - My Exam Tips and Tricks</span>
                                         </a>
                                     </h3>
                                     <p class="text-sm text-gray-400 mt-1">LinkedIn Article</p>
@@ -376,7 +440,8 @@
                                     <h3 class="font-semibold text-blue-300 hover:text-blue-200">
                                         <a href="https://youtube.com/watch?v=D_w5ZHne4zU&si=ajN4s-TegINNcHLi"
                                             target="_blank" class="hover:underline">
-                                            How I prepare for Azure exams [Certified Azure Administrator] [AZ 104]
+                                            <span data-translate="pub-azure-prep">How I prepare for Azure exams
+                                                [Certified Azure Administrator] [AZ 104]</span>
                                         </a>
                                     </h3>
                                     <p class="text-sm text-gray-400 mt-1">YouTube Video</p>
@@ -392,10 +457,11 @@
                 <!-- Skills Section -->
                 <section class="glass-card rounded-xl p-6 shadow-lg">
                     <h2 class="text-2xl font-bold mb-4 flex items-center">
-                        <i data-feather="zap" class="mr-2"></i> Technical Skills
+                        <i data-feather="zap" class="mr-2"></i>
+                        <span data-translate="technical-skills">Technical Skills</span>
                     </h2>
 
-                    <h3 class="font-semibold mt-4 mb-2">Cloud & Infrastructure</h3>
+                    <h3 class="font-semibold mt-4 mb-2" data-translate="skills-cloud">Cloud & Infrastructure</h3>
                     <div class="flex flex-wrap gap-2">
                         <span class="tech-pill px-3 py-1 bg-blue-900/50 rounded-full">Azure</span>
                         <span class="tech-pill px-3 py-1 bg-blue-900/50 rounded-full">Kubernetes</span>
@@ -407,7 +473,7 @@
                         <span class="tech-pill px-3 py-1 bg-blue-900/50 rounded-full">NginX</span>
                     </div>
 
-                    <h3 class="font-semibold mt-4 mb-2">CI/CD & DevOps</h3>
+                    <h3 class="font-semibold mt-4 mb-2" data-translate="skills-cicd">CI/CD & DevOps</h3>
                     <div class="flex flex-wrap gap-2">
                         <span class="tech-pill px-3 py-1 bg-purple-900/50 rounded-full">Azure DevOps</span>
                         <span class="tech-pill px-3 py-1 bg-purple-900/50 rounded-full">GitHub</span>
@@ -418,7 +484,7 @@
                         <span class="tech-pill px-3 py-1 bg-purple-900/50 rounded-full">ServiceNow</span>
                     </div>
 
-                    <h3 class="font-semibold mt-4 mb-2">Programming & Scripting</h3>
+                    <h3 class="font-semibold mt-4 mb-2" data-translate="skills-programming">Programming & Scripting</h3>
                     <div class="flex flex-wrap gap-2">
                         <span class="tech-pill px-3 py-1 bg-green-900/50 rounded-full">Python</span>
                         <span class="tech-pill px-3 py-1 bg-green-900/50 rounded-full">C#</span>
@@ -429,7 +495,7 @@
                         <span class="tech-pill px-3 py-1 bg-green-900/50 rounded-full">CLI</span>
                     </div>
 
-                    <h3 class="font-semibold mt-4 mb-2">Security & Monitoring</h3>
+                    <h3 class="font-semibold mt-4 mb-2" data-translate="skills-security">Security & Monitoring</h3>
                     <div class="flex flex-wrap gap-2">
                         <span class="tech-pill px-3 py-1 bg-yellow-900/50 rounded-full">CyberArk</span>
                         <span class="tech-pill px-3 py-1 bg-yellow-900/50 rounded-full">Ethical Hacking</span>
@@ -440,7 +506,7 @@
                         <span class="tech-pill px-3 py-1 bg-yellow-900/50 rounded-full">Kibana</span>
                     </div>
 
-                    <h3 class="font-semibold mt-4 mb-2">Systems & Administration</h3>
+                    <h3 class="font-semibold mt-4 mb-2" data-translate="skills-systems">Systems & Administration</h3>
                     <div class="flex flex-wrap gap-2">
                         <span class="tech-pill px-3 py-1 bg-red-900/50 rounded-full">Linux</span>
                         <span class="tech-pill px-3 py-1 bg-red-900/50 rounded-full">Windows</span>
@@ -454,32 +520,46 @@
                 <!-- Education Section -->
                 <section class="glass-card rounded-xl p-6 shadow-lg">
                     <h2 class="text-2xl font-bold mb-4 flex items-center">
-                        <i data-feather="book" class="mr-2"></i> Education
+                        <i data-feather="book" class="mr-2"></i>
+                        <span data-translate="education">Education</span>
                     </h2>
-                    <h3 class="text-xl font-semibold">M.Sc. Computer Science</h3>
-                    <p class="text-blue-300">Rheinland-Pfälzische Technische Universität (RPTU) | Kaiserslautern,
-                        Germany | 2018 - 2021</p>
+                    <h3 class="text-xl font-semibold" data-translate="msc-cs">M.Sc. Computer Science</h3>
+                    <p class="text-blue-300">
+                        <span data-translate="university-rptu">Rheinland-Pfälzische Technische Universität (RPTU)</span>
+                        |
+                        <span data-translate="location-kaiserslautern">Kaiserslautern, Germany</span> |
+                        <span data-translate="duration-2018-2020">2018 - 2021</span>
+                    </p>
                     <p class="mt-2">Grade: 2.0</p>
 
-                    <h3 class="text-xl font-semibold mt-4">B.Eng. Computer Software Engineering</h3>
-                    <p class="text-blue-300">Azad University | Tehran, Iran | 2013 - 2017</p>
+                    <h3 class="text-xl font-semibold mt-4" data-translate="beng-cs">B.Eng. Computer Software Engineering
+                    </h3>
+                    <p class="text-blue-300">
+                        <span data-translate="university-azad">Azad University</span> |
+                        <span data-translate="location-iran">Tehran, Iran</span> |
+                        <span data-translate="duration-2018-2020">2013 - 2017</span>
+                    </p>
                     <p class="mt-2">Grade: 1.5</p>
                 </section>
 
                 <!-- Languages & Soft Skills Section -->
                 <section class="glass-card rounded-xl p-6 shadow-lg">
                     <h2 class="text-2xl font-bold mb-4 flex items-center">
-                        <i data-feather="globe" class="mr-2"></i> Languages & Soft Skills
+                        <i data-feather="globe" class="mr-2"></i>
+                        <span data-translate="languages-soft-skills">Languages & Soft Skills</span>
                     </h2>
 
-                    <h3 class="font-semibold mt-4 mb-2">Languages</h3>
+                    <h3 class="font-semibold mt-4 mb-2" data-translate="languages">Languages</h3>
                     <div class="flex flex-wrap gap-2 mb-4">
-                        <span class="tech-pill px-3 py-1 bg-blue-900/50 rounded-full">English (Fluent)</span>
-                        <span class="tech-pill px-3 py-1 bg-blue-900/50 rounded-full">German (B1)</span>
-                        <span class="tech-pill px-3 py-1 bg-blue-900/50 rounded-full">Persian/Farsi (Native)</span>
+                        <span class="tech-pill px-3 py-1 bg-blue-900/50 rounded-full"
+                            data-translate="english-fluent">English (Fluent)</span>
+                        <span class="tech-pill px-3 py-1 bg-blue-900/50 rounded-full" data-translate="german-b1">German
+                            (B1)</span>
+                        <span class="tech-pill px-3 py-1 bg-blue-900/50 rounded-full"
+                            data-translate="persian-native">Persian/Farsi (Native)</span>
                     </div>
 
-                    <h3 class="font-semibold mt-4 mb-2">Soft Skills</h3>
+                    <h3 class="font-semibold mt-4 mb-2" data-translate="soft-skills">Soft Skills</h3>
                     <div class="flex flex-wrap gap-2">
                         <span class="tech-pill px-3 py-1 bg-purple-900/50 rounded-full">Team Collaboration</span>
                         <span class="tech-pill px-3 py-1 bg-purple-900/50 rounded-full">Cross-Functional Teamwork</span>
@@ -502,18 +582,20 @@
         <!-- Contact Section -->
         <section id="contact" class="glass-card rounded-xl p-8 mt-16 shadow-lg max-w-3xl mx-auto">
             <h2 class="text-3xl font-bold mb-6 text-center flex items-center justify-center">
-                <i data-feather="mail" class="mr-3"></i> Get In Touch
+                <i data-feather="mail" class="mr-3"></i>
+                <span data-translate="contact-title">Get In Touch</span>
             </h2>
             <div class="text-center space-y-4">
-                <p class="text-lg text-gray-300">
+                <p class="text-lg text-gray-300" data-translate="contact-text-1">
                     Interested in working together? Have an exciting opportunity?
                 </p>
-                <p class="text-lg text-gray-300">
+                <p class="text-lg text-gray-300" data-translate="contact-text-2">
                     Feel free to reach out - I'm always open to discussing new projects,
                     creative ideas, or opportunities to be part of your vision.
                 </p>
                 <div class="py-4">
-                    <p class="text-sm text-gray-400 mb-2">Send your offers or messages to:</p>
+                    <p class="text-sm text-gray-400 mb-2" data-translate="contact-email-label">Send your offers or
+                        messages to:</p>
                     <div
                         class="flex items-center justify-center space-x-2 text-lg font-mono bg-gray-800/50 rounded-lg p-4 border border-gray-700 email-container group">
                         <span id="email-part1">frz.mohammadali.me</span>
@@ -525,7 +607,7 @@
                 </div>
                 <p class="text-base text-blue-400 font-medium">
                     <i data-feather="clock" class="w-5 h-5 inline mr-2"></i>
-                    I typically respond to emails within 1 hour
+                    <span data-translate="contact-response-time">I typically respond to emails within 1 hour</span>
                 </p>
             </div>
         </section>
@@ -569,6 +651,7 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r134/three.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/vanta@latest/dist/vanta.net.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/animejs@3.2.1/lib/anime.min.js"></script>
+    <script src="lang-res.js"></script>
     <script src="script-20251103.js"></script>
 </body>
 

@@ -347,3 +347,48 @@ canvas {
     backdrop-filter: blur(10px);
     border: 1px solid rgba(255, 255, 255, 0.2);
 }
+
+/* Language selector styles */
+.lang-selector-container {
+    position: absolute;
+    top: 20px;
+    right: 20px;
+    z-index: 100;
+}
+
+.lang-selector {
+    background: rgba(255, 255, 255, 0.9);
+    border-radius: 8px;
+    padding: 8px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+    display: flex;
+    gap: 5px;
+}
+
+.lang-btn {
+    padding: 6px 12px;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    font-weight: 500;
+    transition: all 0.3s ease;
+}
+
+.lang-btn.active {
+    background: #3498db;
+    color: white;
+}
+
+/* RTL support for Persian */
+body[dir="rtl"] {
+    text-align: right;
+}
+
+body[dir="rtl"] .section-title {
+    border-bottom: 2px solid var(--secondary-color);
+}
+
+body[dir="rtl"] .lang-selector-container {
+    right: auto;
+    left: 20px;
+}

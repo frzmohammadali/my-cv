@@ -2,6 +2,8 @@
 document.addEventListener('DOMContentLoaded', () => {
     feather.replace();
     initVanta();
+    initLanguage();
+    initDownloadDropdown();
 
     // Initialize animations
     anime({
@@ -27,7 +29,6 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     });
 
-    initDownloadDropdown();
 });
 
 // Initialize Vanta.js background
@@ -243,4 +244,56 @@ function fallbackCopyText(text, container) {
     } finally {
         document.body.removeChild(textArea);
     }
+}
+
+// Language management
+let currentLanguage = 'en';
+
+function setLanguage(lang) {
+    currentLanguage = lang;
+
+    // Update active button styling
+    document.querySelectorAll('.lang-btn').forEach(btn => {
+        const isActive = btn.dataset.lang === lang;
+        btn.className = `lang-btn px-3 py-1 rounded-full text-sm font-medium transition-colors duration-200 ${isActive
+                ? 'bg-blue-500 text-white'
+                : 'text-gray-300 bg-gray-800/50 hover:bg-blue-600 hover:text-white'
+            }`;
+    });
+
+    // Update all translatable elements
+    document.querySelectorAll('[data-translate]').forEach(element => {
+        const key = element.getAttribute('data-translate');
+        if (translations[lang] && translations[lang][key]) {
+            element.textContent = translations[lang][key];
+        }
+    });
+
+    // Update URL without page reload
+    const url = new URL(window.location);
+    url.searchParams.set('lang', lang);
+    window.history.replaceState({}, '', url);
+}
+
+function initLanguage() {
+    // Check URL parameter first
+    const urlParams = new URLSearchParams(window.location.search);
+    const urlLang = urlParams.get('lang');
+
+    if (urlLang && (urlLang === 'en' || urlLang === 'de')) {
+        setLanguage(urlLang);
+    } else {
+        // Check browser language
+        const browserLang = navigator.language.split('-')[0];
+        if (browserLang === 'de') {
+            setLanguage('de');
+        }
+    }
+
+    // Add click handlers to language buttons
+    document.querySelectorAll('.lang-btn').forEach(btn => {
+        btn.addEventListener('click', () => {
+            setLanguage(btn.dataset.lang);
+        });
+    });
 }
