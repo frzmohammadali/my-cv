@@ -11,7 +11,7 @@ const translations = {
         "contact-me": "Contact Me",
         "email-label": "Email:",
         "phone-label": "Phone:",
-        "click-to-reveal": "click to reveal!",
+        "click-to-reveal": "click to reveal >",
         "last-updated": "Last updated: November 2025",
 
         // Sections
