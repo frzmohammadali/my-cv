@@ -256,8 +256,8 @@ function setLanguage(lang) {
     document.querySelectorAll('.lang-btn').forEach(btn => {
         const isActive = btn.dataset.lang === lang;
         btn.className = `lang-btn px-3 py-1 rounded-full text-sm font-medium transition-colors duration-200 ${isActive
-                ? 'bg-blue-500 text-white'
-                : 'text-gray-300 bg-gray-800/50 hover:bg-blue-600 hover:text-white'
+            ? 'bg-blue-500 text-white'
+            : 'text-gray-300 bg-gray-800/50 hover:bg-blue-600 hover:text-white'
             }`;
     });
 
@@ -295,5 +295,13 @@ function initLanguage() {
         btn.addEventListener('click', () => {
             setLanguage(btn.dataset.lang);
         });
+    });
+}
+
+// Scroll to top function
+function scrollToTop() {
+    window.scrollTo({
+        top: 0,
+        behavior: 'smooth'
     });
 }

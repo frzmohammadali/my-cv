@@ -93,7 +93,9 @@ const translations = {
         "contact-text-1": "Interested in working together? Have an exciting opportunity?",
         "contact-text-2": "Feel free to reach out - I'm always open to discussing new projects, creative ideas, or opportunities to be part of your vision.",
         "contact-email-label": "Send your offers or messages to:",
-        "contact-response-time": "I typically respond to emails within 1 hour"
+        "contact-response-time": "I typically respond to emails within 1 hour",
+
+        "move-to-top": "Move to Top"
     },
     de: {
         // Header
@@ -106,7 +108,7 @@ const translations = {
         "contact-me": "Kontakt aufnehmen",
         "email-label": "E-Mail:",
         "phone-label": "Telefon:",
-        "click-to-reveal": "zum Anzeigen klicken!",
+        "click-to-reveal": "zum Anzeigen >",
         "last-updated": "Zuletzt aktualisiert: November 2025",
 
         // Sections
@@ -188,6 +190,8 @@ const translations = {
         "contact-text-1": "Interesse an Zusammenarbeit? Haben Sie eine spannende Gelegenheit?",
         "contact-text-2": "Kontaktieren Sie mich gerne - ich bin immer offen für neue Projekte, kreative Ideen oder Möglichkeiten, Teil Ihrer Vision zu werden.",
         "contact-email-label": "Senden Sie Ihre Angebote oder Nachrichten an:",
-        "contact-response-time": "Ich antworte in der Regel innerhalb von 1 Stunde auf E-Mails"
+        "contact-response-time": "Ich antworte in der Regel innerhalb von 1 Stunde auf E-Mails",
+
+        "move-to-top": "Nach oben",
     }
 };
