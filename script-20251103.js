@@ -1,6 +1,7 @@
 // Handle document ready
 document.addEventListener('DOMContentLoaded', () => {
     feather.replace();
+    initVanta();
 
     // Initialize animations
     anime({
@@ -28,6 +29,35 @@ document.addEventListener('DOMContentLoaded', () => {
 
     initDownloadDropdown();
 });
+
+// Initialize Vanta.js background
+function initVanta() {
+    if (window.VANTA && window.THREE) {
+        VANTA.NET({
+            el: "#vanta-bg",
+            mouseControls: true,
+            touchControls: true,
+            gyroControls: false,
+            minHeight: 200.00,
+            minWidth: 200.00,
+            scale: 1.00,
+            scaleMobile: 1.00,
+            color: 0x3b82f6,        // Original blue color
+            backgroundColor: 0x111827,
+            points: 8.00,           // Moderate number of points
+            maxDistance: 20.00,     // Moderate connection distance
+            spacing: 20.00,         // Balanced spacing
+            showDots: true,         // Show dots but make them subtle
+            lineColor: 0x3b82f6,    // Match line color
+            alpha: 0.6,             // Moderate transparency
+            beta: 0.6,              // Moderate movement speed
+            backgroundAlpha: 1      // Keep background visible
+        });
+    } else {
+        // Retry after a short delay if Three.js isn't loaded yet
+        setTimeout(initVanta, 100);
+    }
+}
 
 let currentCertImage = '';
 

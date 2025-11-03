@@ -6,39 +6,13 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Mohammadali Forouzesh - DevOps Engineer | Kubernetes Administrator | Site Reliability Engineer</title>
     <link rel="icon" type="image/x-icon" href="images/myimage.jpg">
-    <script src="https://cdn.tailwindcss.com"></script>
-    <script src="https://unpkg.com/feather-icons"></script>
-    <script src="https://cdn.jsdelivr.net/npm/feather-icons/dist/feather.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/vanta@latest/dist/vanta.net.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/animejs@3.2.1/lib/anime.min.js"></script>
-
-    <link rel="stylesheet" href="style.css">
-    <style>
-        .tech-pill {
-            transition: all 0.3s ease;
-        }
-
-        .tech-pill:hover {
-            transform: translateY(-3px);
-            box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
-        }
-
-        .vanta-bg {
-            position: absolute;
-            width: 100%;
-            height: 100%;
-            z-index: -1;
-        }
-
-        .glass-card {
-            background: rgba(255, 255, 255, 0.1);
-            backdrop-filter: blur(10px);
-            border: 1px solid rgba(255, 255, 255, 0.2);
-        }
-    </style>
+    <link rel="stylesheet" href="style-20251103.css">
 </head>
 
 <body class="min-h-screen bg-gray-900 text-gray-100">
+    <!-- Vanta Background -->
+    <div id="vanta-bg" class="vanta-bg"></div>
+
     <!-- Top Banner -->
     <div class="top-banner">
         <span class="flex items-center gap-2 text-sm font-medium ml-8">
@@ -47,7 +21,7 @@
         </span>
     </div>
 
-    <div id="vanta-bg" class="vanta-bg"></div>
+
 
     <div class="container mx-auto px-4 py-12">
         <!-- Header Section -->
@@ -58,9 +32,13 @@
                 class="text-4xl font-bold text-center mb-2 bg-clip-text text-transparent bg-gradient-to-r from-blue-400 to-purple-600">
                 Mohammadali Forouzesh
             </h1>
-            <p class="text-xl text-blue-300 mb-4 text-center">DevOps Engineer | Kubernetes Administrator | Site
-                Reliability Engineer
+            <p class="text-xl text-blue-300 mb-4 text-center">
+                DevOps Engineer | Kubernetes Administrator | Site Reliability Engineer
             </p>
+            <div class="flex items-center justify-center gap-1 mb-4 text-gray-300 font-medium">
+                <i data-feather="file-text" class="w-3 h-3"></i>
+                Germany PR holder
+            </div>
             <div class="flex space-x-4">
                 <div class="relative group" id="download-dropdown">
                     <button
@@ -111,7 +89,7 @@
                     <h2 class="text-2xl font-bold mb-4 flex items-center">
                         <i data-feather="user" class="mr-2"></i> About Me
                     </h2>
-                    <p class="mb-4">
+                    <p class="mb-4 text-justify">
                         🚀 Results-driven DevOps Engineer with a Master's in Computer Science and 8+ years of experience
                         in cloud architecture ☁️, Azure, AWS, CI/CD and Kubernetes.
                         💪 Proven ability to lead production releases and automate infrastructure.
@@ -304,7 +282,8 @@
                     </h2>
                     <div class="mb-6">
                         <h3 class="text-xl font-semibold">Senior DevOps Engineer</h3>
-                        <p class="text-blue-300">Euroclear | Brussels, Belgium (Remote) | 2023 - Present</p>
+                        <p class="text-blue-300">Euroclear | Brussels, Belgium <span
+                                class="text-green-400 font-semibold">(Remote from Germany)</span> | 2023 - Present</p>
                         <ul class="list-disc pl-5 mt-2 space-y-1">
                             <li>Designed and managed 10+ CI/CD pipelines in Azure DevOps for diverse application teams
                             </li>
@@ -319,7 +298,8 @@
 
                     <div class="mb-6">
                         <h3 class="text-xl font-semibold">Project Lead & Senior DevOps Consultant</h3>
-                        <p class="text-blue-300">HCL Technologies | Frankfurt, Germany (Remote) | 2023 - Present</p>
+                        <p class="text-blue-300">HCL Technologies | Frankfurt, Germany <span
+                                class="text-green-400 font-semibold">(Remote from Germany)</span> | 2023 - Present</p>
                         <ul class="list-disc pl-5 mt-2 space-y-1">
                             <li>Consulted as a Senior DevOps expert for client Euroclear, driving key project deliveries
                             </li>
@@ -329,7 +309,8 @@
 
                     <div class="mb-6">
                         <h3 class="text-xl font-semibold">Senior Software/DevOps Engineer</h3>
-                        <p class="text-blue-300">matelso GmbH | Kaiserslautern, Germany | 2021 - 2023</p>
+                        <p class="text-blue-300">matelso GmbH | Kaiserslautern, Germany <span
+                                class="text-green-400 font-semibold">(On site)</span> | 2021 - 2023</p>
                         <ul class="list-disc pl-5 mt-2 space-y-1">
                             <li>Architected and maintained core backend GraphQL APIs for a SaaS platform</li>
                             <li>Developed and enhanced 10+ microservices using .NET</li>
@@ -340,7 +321,8 @@
 
                     <div>
                         <h3 class="text-xl font-semibold">Software Engineer & Research Assistant</h3>
-                        <p class="text-blue-300">Max Planck Institute | Kaiserslautern, Germany | 2018 - 2020</p>
+                        <p class="text-blue-300">Max Planck Institute | Kaiserslautern, Germany <span
+                                class="text-green-400 font-semibold">(On site)</span> | 2018 - 2020</p>
                         <ul class="list-disc pl-5 mt-2 space-y-1">
                             <li>Developed interactive data visualization dashboards using Python and web technologies
                             </li>
@@ -581,8 +563,13 @@
         </div>
     </div>
 
-
-    <script src="script.js"></script>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://unpkg.com/feather-icons"></script>
+    <script src="https://cdn.jsdelivr.net/npm/feather-icons/dist/feather.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r134/three.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/vanta@latest/dist/vanta.net.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/animejs@3.2.1/lib/anime.min.js"></script>
+    <script src="script-20251103.js"></script>
 </body>
 
 </html>
