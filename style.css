@@ -2,7 +2,7 @@ body {
     padding: 0 2rem 2rem 2rem;
     font-family: -apple-system, BlinkMacSystemFont, "Arial", sans-serif;
     scroll-behavior: smooth;
-    overflow-x: hidden; 
+    overflow-x: hidden;
 }
 
 .cert-thumbnail {
@@ -18,11 +18,13 @@ body {
 #certModal {
     opacity: 0;
     transition: opacity 0.3s ease;
-    display: none !important; /* Changed from flex to none */
+    display: none !important;
+    /* Changed from flex to none */
 }
 
 #certModal:not(.hidden) {
-    display: flex !important; /* Show when not hidden */
+    display: flex !important;
+    /* Show when not hidden */
     opacity: 1;
 }
 
@@ -90,7 +92,7 @@ p {
     left: 0;
     right: 0;
     bottom: 0;
-    z-index: 50;
+    z-index: 1000;
     background: rgba(0, 0, 0, 0.8);
     align-items: center;
     justify-content: center;
@@ -152,11 +154,11 @@ p {
         width: 200px;
         z-index: 100;
     }
-    
+
     #dropdown-menu:not(.hidden) {
         transform: translateX(-50%) translateY(0);
     }
-    
+
     /* Ensure dropdown stays on top of other content */
     #download-dropdown {
         z-index: 100;

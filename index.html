@@ -569,19 +569,18 @@
         </footer>
     </div>
     <!-- Cert Image Modal -->
-    <div id="certModal" class="hidden">
-        <div
-            class="fixed inset-0 bg-black/80 z-50 flex items-center justify-center p-4 transition-opacity duration-300">
-            <div class="relative max-w-4xl w-full max-h-[90vh] flex items-center justify-center">
-                <button onclick="hideCertImage()"
-                    class="absolute -top-12 right-0 text-white hover:text-blue-400 bg-gray-800/80 rounded-full p-3 transition-colors duration-200 z-10">
-                    <i data-feather="x" class="w-6 h-6 md:w-8 md:h-8"></i>
-                </button>
-                <img id="certFullImage" src="" alt="Certificate"
-                    class="w-full h-auto max-h-[80vh] object-contain rounded-lg shadow-2xl">
-            </div>
+    <div id="certModal"
+        class="hidden fixed inset-0 z-50 flex items-center justify-center bg-black/80 p-4 overflow-hidden">
+        <div class="relative w-full max-w-[95vw] sm:max-w-4xl max-h-[90vh] flex items-center justify-center">
+            <button onclick="hideCertImage()"
+                class="absolute top-2 right-2 text-white hover:text-blue-400 bg-gray-800/80 rounded-full p-2 sm:p-3 transition-colors duration-200 z-10">
+                <i data-feather="x" class="w-6 h-6 sm:w-8 sm:h-8"></i>
+            </button>
+            <img id="certFullImage" src="" alt="Certificate"
+                class="w-full h-auto max-h-[80vh] object-contain rounded-lg shadow-2xl">
         </div>
     </div>
+
 
     <script src="script.js"></script>
 </body>
