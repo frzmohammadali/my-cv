@@ -271,7 +271,7 @@ p {
 }
 
 /* Extra small screen fixes */
-@media (max-width: 390px) {
+@media (max-width: 430px) {
     .email-container {
         font-size: 0.8rem !important;
         padding: 10px 6px !important;

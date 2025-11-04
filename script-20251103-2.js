@@ -5,16 +5,6 @@ document.addEventListener('DOMContentLoaded', () => {
     initLanguage();
     initDownloadDropdown();
 
-    // Initialize animations
-    anime({
-        targets: '.glass-card',
-        translateY: [50, 0],
-        opacity: [0, 1],
-        duration: 1000,
-        delay: anime.stagger(200),
-        easing: 'easeOutExpo'
-    });
-
     // Close modal on ESC key
     document.addEventListener('keydown', (e) => {
         if (e.key === 'Escape') {
