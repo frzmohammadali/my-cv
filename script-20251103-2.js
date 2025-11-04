@@ -4,6 +4,7 @@ document.addEventListener('DOMContentLoaded', () => {
     initVanta();
     initLanguage();
     initDownloadDropdown();
+    initGlobalViewCounter();
 
     // Close modal on ESC key
     document.addEventListener('keydown', (e) => {
@@ -294,4 +295,24 @@ function scrollToTop() {
         top: 0,
         behavior: 'smooth'
     });
+}
+
+// Global visitor counter using Cloudflare Worker
+async function initGlobalViewCounter() {
+    try {
+        // Replace with your actual Worker URL
+        const workerUrl = 'https://visitor-counter.feed-shallow045.workers.dev/count';
+
+        const response = await fetch(workerUrl);
+
+        if (response.ok) {
+            const data = await response.json();
+            document.getElementById('visitorCount').textContent = data.count;
+        } else {
+            document.getElementById('visitorCount').textContent = '?';
+        }
+    } catch (error) {
+        console.log('Counter service unavailable');
+        document.getElementById('visitorCount').textContent = '?';
+    }
 }

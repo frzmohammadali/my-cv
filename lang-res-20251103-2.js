@@ -95,6 +95,9 @@ const translations = {
         "contact-email-label": "Send your offers or messages to:",
         "contact-response-time": "I typically respond to emails within 1 hour",
 
+        "visitor-count": "You are visitor",
+        "visitor-today": "today",
+
         "move-to-top": "Move to Top"
     },
     de: {
@@ -192,6 +195,9 @@ const translations = {
         "contact-email-label": "Senden Sie Ihre Angebote oder Nachrichten an:",
         "contact-response-time": "Ich antworte in der Regel innerhalb von 1 Stunde auf E-Mails",
 
-        "move-to-top": "Nach oben",
+        "visitor-count": "Sie sind Besucher",
+        "visitor-today": "heute",
+
+        "move-to-top": "Nach oben"
     }
 };
