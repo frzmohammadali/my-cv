@@ -105,7 +105,7 @@ const translations = {
         "name": "Mohammadali Forouzesh",
         "title": "DevOps Engineer | Kubernetes Administrator | Site Reliability Engineer",
         "pr-status": "Niederlassungserlaubnis für Deutschland",
-        "download-cv": "Lebenslauf herunterladen",
+        "download-cv": "Lebenslauf herunterladen (EN)",
         "pdf-version": "PDF Version",
         "yaml-version": "YAML Version",
         "contact-me": "Kontakt aufnehmen",
