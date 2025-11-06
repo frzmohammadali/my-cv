@@ -63,8 +63,8 @@ function getBerlinDate() {
     return berlinTime.toISOString().split('T')[0];
 }
 
-// Overload for specific dates
-function getBerlinDate(date = new Date()) {
+// Helper function for cleanup to get Berlin date for specific dates
+function getBerlinDateForCleanup(date = new Date()) {
     // Create date in Berlin timezone by using UTC+1 (CET) or UTC+2 (CEST)
     const localTime = date.getTime();
     const localOffset = date.getTimezoneOffset();
@@ -312,14 +312,14 @@ async function cleanupOldData(env) {
     try {
         const thirtyDaysAgo = new Date();
         thirtyDaysAgo.setDate(thirtyDaysAgo.getDate() - 30);
-        const cleanupDate = getBerlinDate(thirtyDaysAgo);
+        const cleanupDate = getBerlinDateForCleanup(thirtyDaysAgo);
 
         // Clean up data for each day older than 30 days
         const today = new Date();
         for (let i = 31; i <= 90; i++) { // Clean days 31-90
             const date = new Date(today);
             date.setDate(date.getDate() - i);
-            const dateString = getBerlinDate(date);
+            const dateString = getBerlinDateForCleanup(date);
 
             // Delete both visitor lists and detailed data
             await env.VISITOR_COUNTER_KV.delete(`visitors-${dateString}`);
