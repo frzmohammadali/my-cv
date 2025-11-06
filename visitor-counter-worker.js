@@ -39,6 +39,8 @@ export default {
             return await handleStats(request, env, corsHeaders, isAllowedOrigin);
         } else if (url.pathname === '/visitors') {
             return await handleVisitorsList(request, env, corsHeaders, isAllowedOrigin);
+        } else if (url.pathname === '/verify-turnstile') {
+            return await handleTurnstileVerification(request, env, corsHeaders, isAllowedOrigin);
         } else {
             return new Response('Not found', {
                 status: 404,
@@ -48,47 +50,84 @@ export default {
     }
 }
 
-// Helper function to get current date in Europe/Berlin timezone
-function getBerlinDate() {
-    // Create date in Berlin timezone by using UTC+1 (CET) or UTC+2 (CEST)
-    // Note: This is a simplified approach. For precise DST handling, you might need a library
-    // but this should work well for daily reset purposes
-    const now = new Date();
-    // Convert to Berlin time (UTC+1)
-    const berlinOffset = 1 * 60; // Berlin is UTC+1 (60 minutes)
-    const localTime = now.getTime();
-    const localOffset = now.getTimezoneOffset();
-    const berlinTime = new Date(localTime + (localOffset + berlinOffset) * 60000);
+// Add this new function for Turnstile verification
+async function handleTurnstileVerification(request, env, corsHeaders, isAllowedOrigin) {
+    try {
+        // Block requests from disallowed origins
+        if (!isAllowedOrigin) {
+            return new Response('Forbidden', { status: 403 });
+        }
 
-    return berlinTime.toISOString().split('T')[0];
+        if (request.method !== 'POST') {
+            return new Response('Method not allowed', { status: 405, headers: corsHeaders });
+        }
+
+        const { token } = await request.json();
+
+        if (!token) {
+            return new Response(JSON.stringify({ success: false, error: 'Missing token' }), {
+                status: 400,
+                headers: { 'Content-Type': 'application/json', ...corsHeaders }
+            });
+        }
+
+        // Verify the Turnstile token with Cloudflare
+        const formData = new FormData();
+        formData.append('secret', env.TURNSTILE_SECRET_KEY);
+        formData.append('response', token);
+        formData.append('remoteip', request.headers.get('cf-connecting-ip') || 'unknown');
+
+        const turnstileResponse = await fetch('https://challenges.cloudflare.com/turnstile/v0/siteverify', {
+            method: 'POST',
+            body: formData,
+        });
+
+        const turnstileData = await turnstileResponse.json();
+
+        if (turnstileData.success) {
+            // Generate a session token for the verified user
+            const sessionToken = await generateSessionToken();
+            const sessionExpiry = Math.floor(Date.now() / 1000) + 3600; // 1 hour expiry
+
+            // Store session in KV
+            await env.VISITOR_COUNTER_KV.put(`session-${sessionToken}`, 'verified', { expirationTtl: 3600 });
+
+            return new Response(JSON.stringify({
+                success: true,
+                sessionToken: sessionToken
+            }), {
+                headers: { 'Content-Type': 'application/json', ...corsHeaders }
+            });
+        } else {
+            return new Response(JSON.stringify({
+                success: false,
+                error: 'Turnstile verification failed',
+                turnstileErrors: turnstileData['error-codes']
+            }), {
+                status: 400,
+                headers: { 'Content-Type': 'application/json', ...corsHeaders }
+            });
+        }
+
+    } catch (error) {
+        return new Response(JSON.stringify({
+            success: false,
+            error: 'Internal server error'
+        }), {
+            status: 500,
+            headers: { 'Content-Type': 'application/json', ...corsHeaders }
+        });
+    }
 }
 
-// Helper function for cleanup to get Berlin date for specific dates
-function getBerlinDateForCleanup(date = new Date()) {
-    // Create date in Berlin timezone by using UTC+1 (CET) or UTC+2 (CEST)
-    const localTime = date.getTime();
-    const localOffset = date.getTimezoneOffset();
-    const berlinOffset = 1 * 60; // Berlin is UTC+1 (60 minutes)
-    const berlinTime = new Date(localTime + (localOffset + berlinOffset) * 60000);
-
-    return berlinTime.toISOString().split('T')[0];
+// Add this helper function
+async function generateSessionToken() {
+    const array = new Uint8Array(32);
+    crypto.getRandomValues(array);
+    return Array.from(array, byte => byte.toString(16).padStart(2, '0')).join('');
 }
 
-// Helper function to get detailed visitor information
-function getVisitorInfo(request) {
-    const ip = request.headers.get('cf-connecting-ip') || request.headers.get('x-forwarded-for') || 'unknown';
-    const userAgent = request.headers.get('user-agent') || 'unknown';
-    const country = request.headers.get('cf-ipcountry') || 'unknown';
-
-    return {
-        ip,
-        userAgent,
-        country,
-        timestamp: new Date().toISOString()
-    };
-}
-
-
+// Modify the handleCount function to check for session verification
 async function handleCount(request, env, corsHeaders, isAllowedOrigin) {
     try {
         // Block requests from disallowed origins
@@ -96,8 +135,32 @@ async function handleCount(request, env, corsHeaders, isAllowedOrigin) {
             return new Response('Forbidden', { status: 403 });
         }
 
+        // Check for session token in headers
+        const sessionToken = request.headers.get('x-session-token');
+        if (!sessionToken) {
+            return new Response(JSON.stringify({
+                error: 'Session verification required',
+                requiresVerification: true
+            }), {
+                status: 401,
+                headers: { 'Content-Type': 'application/json', ...corsHeaders }
+            });
+        }
+
+        // Verify session token
+        const session = await env.VISITOR_COUNTER_KV.get(`session-${sessionToken}`);
+        if (!session) {
+            return new Response(JSON.stringify({
+                error: 'Invalid or expired session',
+                requiresVerification: true
+            }), {
+                status: 401,
+                headers: { 'Content-Type': 'application/json', ...corsHeaders }
+            });
+        }
+
         const visitorInfo = getVisitorInfo(request);
-        const today = getBerlinDate(); // Use Berlin timezone
+        const today = getBerlinDate();
 
         // Create a hash for this visitor
         const visitorHash = await createVisitorHash(visitorInfo);
@@ -153,6 +216,47 @@ async function handleCount(request, env, corsHeaders, isAllowedOrigin) {
             }
         });
     }
+}
+
+
+// Helper function to get current date in Europe/Berlin timezone
+function getBerlinDate() {
+    // Create date in Berlin timezone by using UTC+1 (CET) or UTC+2 (CEST)
+    // Note: This is a simplified approach. For precise DST handling, you might need a library
+    // but this should work well for daily reset purposes
+    const now = new Date();
+    // Convert to Berlin time (UTC+1)
+    const berlinOffset = 1 * 60; // Berlin is UTC+1 (60 minutes)
+    const localTime = now.getTime();
+    const localOffset = now.getTimezoneOffset();
+    const berlinTime = new Date(localTime + (localOffset + berlinOffset) * 60000);
+
+    return berlinTime.toISOString().split('T')[0];
+}
+
+// Helper function for cleanup to get Berlin date for specific dates
+function getBerlinDateForCleanup(date = new Date()) {
+    // Create date in Berlin timezone by using UTC+1 (CET) or UTC+2 (CEST)
+    const localTime = date.getTime();
+    const localOffset = date.getTimezoneOffset();
+    const berlinOffset = 1 * 60; // Berlin is UTC+1 (60 minutes)
+    const berlinTime = new Date(localTime + (localOffset + berlinOffset) * 60000);
+
+    return berlinTime.toISOString().split('T')[0];
+}
+
+// Helper function to get detailed visitor information
+function getVisitorInfo(request) {
+    const ip = request.headers.get('cf-connecting-ip') || request.headers.get('x-forwarded-for') || 'unknown';
+    const userAgent = request.headers.get('user-agent') || 'unknown';
+    const country = request.headers.get('cf-ipcountry') || 'unknown';
+
+    return {
+        ip,
+        userAgent,
+        country,
+        timestamp: new Date().toISOString()
+    };
 }
 
 // Modified endpoint to get detailed visitors list
