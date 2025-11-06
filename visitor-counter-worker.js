@@ -65,26 +65,21 @@ function getBerlinDate() {
 
 // Helper function to get detailed visitor information
 function getVisitorInfo(request) {
-    const rawIp = request.headers.get('cf-connecting-ip') || request.headers.get('x-forwarded-for') || 'unknown';
-    const ip = getIPv4(rawIp); // Use IPv4 version
+    const ip = request.headers.get('cf-connecting-ip') || request.headers.get('x-forwarded-for') || 'unknown';
     const userAgent = request.headers.get('user-agent') || 'unknown';
-
-    // Cloudflare provides these headers for location data
     const country = request.headers.get('cf-ipcountry') || 'unknown';
-    const city = request.headers.get('cf-ipcity') || request.headers.get('cf-ray')?.split('-')[1] || 'unknown';
-    const region = request.headers.get('cf-region') || request.headers.get('cf-ipstate') || 'unknown';
+    const city = request.headers.get('cf-ipcity') || 'unknown';
+    const region = request.headers.get('cf-region') || 'unknown';
     const timezone = request.headers.get('cf-timezone') || 'unknown';
-    const postalCode = request.headers.get('cf-postal-code') || 'unknown';
 
     return {
         ip,
         userAgent,
         location: {
             country,
-            city: city !== 'unknown' ? decodeURIComponent(city) : 'unknown',
-            region: region !== 'unknown' ? decodeURIComponent(region) : 'unknown',
-            timezone,
-            postalCode
+            city,
+            region,
+            timezone
         },
         timestamp: new Date().toISOString()
     };
@@ -302,28 +297,4 @@ async function createVisitorHash(visitorInfo) {
     const hashArray = Array.from(new Uint8Array(hashBuffer));
     const visitorHash = hashArray.map(b => b.toString(16).padStart(2, '0')).join('').substring(0, 16);
     return visitorHash;
-}
-
-// Helper function to extract IPv4 from various header formats
-function getIPv4(ip) {
-    if (!ip || ip === 'unknown') return 'unknown';
-
-    // Handle IPv6 to IPv4 mapping (Cloudflare adds ::ffff: prefix for IPv4)
-    if (ip.startsWith('::ffff:')) {
-        return ip.replace('::ffff:', '');
-    }
-
-    // Handle IPv6 addresses - for simplicity, return first part or unknown
-    if (ip.includes(':')) {
-        // For IPv6, you might want to store a simplified version or just mark as IPv6
-        // Alternatively, you could extract the IPv4 if it's a mapped address
-        return 'IPv6-' + ip.split(':')[0]; // Or return 'unknown' if you don't want IPv6 at all
-    }
-
-    // If it's already IPv4, return as is
-    if (ip.match(/^\d+\.\d+\.\d+\.\d+$/)) {
-        return ip;
-    }
-
-    return 'unknown';
 }
