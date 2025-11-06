@@ -22,49 +22,6 @@ document.addEventListener('DOMContentLoaded', () => {
 
 });
 
-// Turnstile configuration
-const TURNSTILE_SITE_KEY = '0x4AAAAAAB_jw--mhD6z0CmX'; // You'll get this from Cloudflare
-let sessionToken = localStorage.getItem('turnstileSessionToken');
-
-// Add this function to verify Turnstile
-async function verifyTurnstile() {
-    try {
-        // Execute Turnstile
-        const token = await new Promise((resolve, reject) => {
-            turnstile.ready(() => {
-                turnstile.execute(TURNSTILE_SITE_KEY, {
-                    action: 'view',
-                    execution: 'execute',
-                    theme: 'dark'
-                }).then(resolve).catch(reject);
-            });
-        });
-
-        // Verify token with our worker
-        const response = await fetch('https://visitor-counter.feed-shallow045.workers.dev/verify-turnstile', {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json',
-            },
-            body: JSON.stringify({ token })
-        });
-
-        const data = await response.json();
-
-        if (data.success) {
-            sessionToken = data.sessionToken;
-            localStorage.setItem('turnstileSessionToken', sessionToken);
-            return true;
-        } else {
-            console.error('Turnstile verification failed:', data.error);
-            return false;
-        }
-    } catch (error) {
-        console.error('Turnstile verification error:', error);
-        return false;
-    }
-}
-
 // Initialize Vanta.js background
 function initVanta() {
     if (window.VANTA && window.THREE) {
@@ -340,35 +297,13 @@ function scrollToTop() {
     });
 }
 
-// Modify the existing initGlobalViewCounter function
+// Global visitor counter using Cloudflare Worker
 async function initGlobalViewCounter() {
     try {
-        // Check if we have a valid session token
-        if (!sessionToken) {
-            // Show Turnstile verification
-            const verified = await verifyTurnstile();
-            if (!verified) {
-                document.getElementById('visitorCount').textContent = 'Verification required';
-                return;
-            }
-        }
-
         // Replace with your actual Worker URL
         const workerUrl = 'https://visitor-counter.feed-shallow045.workers.dev/count';
 
-        const response = await fetch(workerUrl, {
-            headers: {
-                'x-session-token': sessionToken
-            }
-        });
-
-        if (response.status === 401) {
-            // Session expired or invalid, re-verify
-            localStorage.removeItem('turnstileSessionToken');
-            sessionToken = null;
-            await initGlobalViewCounter();
-            return;
-        }
+        const response = await fetch(workerUrl);
 
         if (response.ok) {
             const data = await response.json();
