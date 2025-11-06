@@ -63,24 +63,27 @@ function getBerlinDate() {
     return berlinTime.toISOString().split('T')[0];
 }
 
+// Overload for specific dates
+function getBerlinDate(date = new Date()) {
+    // Create date in Berlin timezone by using UTC+1 (CET) or UTC+2 (CEST)
+    const localTime = date.getTime();
+    const localOffset = date.getTimezoneOffset();
+    const berlinOffset = 1 * 60; // Berlin is UTC+1 (60 minutes)
+    const berlinTime = new Date(localTime + (localOffset + berlinOffset) * 60000);
+
+    return berlinTime.toISOString().split('T')[0];
+}
+
 // Helper function to get detailed visitor information
 function getVisitorInfo(request) {
     const ip = request.headers.get('cf-connecting-ip') || request.headers.get('x-forwarded-for') || 'unknown';
     const userAgent = request.headers.get('user-agent') || 'unknown';
     const country = request.headers.get('cf-ipcountry') || 'unknown';
-    const city = request.headers.get('cf-ipcity') || 'unknown';
-    const region = request.headers.get('cf-region') || 'unknown';
-    const timezone = request.headers.get('cf-timezone') || 'unknown';
 
     return {
         ip,
         userAgent,
-        location: {
-            country,
-            city,
-            region,
-            timezone
-        },
+        country,
         timestamp: new Date().toISOString()
     };
 }
@@ -283,18 +286,47 @@ async function updateDailyTotal(env, date) {
     let currentTotal = await env.VISITOR_COUNTER_KV.get(totalKey);
     currentTotal = currentTotal ? parseInt(currentTotal) + 1 : 1;
 
-    // Store totals for 90 days (3 months of history)
-    await env.VISITOR_COUNTER_KV.put(totalKey, currentTotal.toString(), { expirationTtl: 7776000 });
+    // Store totals for 30 days only
+    await env.VISITOR_COUNTER_KV.put(totalKey, currentTotal.toString(), { expirationTtl: 2592000 });
+
+    // Run cleanup periodically (approximately 1% of requests)
+    if (Math.random() < 0.01) {
+        await cleanupOldData(env);
+    }
 }
 
 // Helper function to create a hash from visitor info
 async function createVisitorHash(visitorInfo) {
-    // Use the IPv4 address in the hash
-    const visitorString = `${visitorInfo.ip}-${visitorInfo.userAgent}-${visitorInfo.location.country}`;
+    const visitorString = `${visitorInfo.ip}-${visitorInfo.userAgent}-${visitorInfo.country}`;
     const encoder = new TextEncoder();
     const data = encoder.encode(visitorString);
     const hashBuffer = await crypto.subtle.digest('SHA-256', data);
     const hashArray = Array.from(new Uint8Array(hashBuffer));
     const visitorHash = hashArray.map(b => b.toString(16).padStart(2, '0')).join('').substring(0, 16);
     return visitorHash;
+}
+
+
+// Automatic cleanup of old visitor data (older than 30 days)
+async function cleanupOldData(env) {
+    try {
+        const thirtyDaysAgo = new Date();
+        thirtyDaysAgo.setDate(thirtyDaysAgo.getDate() - 30);
+        const cleanupDate = getBerlinDate(thirtyDaysAgo);
+
+        // Clean up data for each day older than 30 days
+        const today = new Date();
+        for (let i = 31; i <= 90; i++) { // Clean days 31-90
+            const date = new Date(today);
+            date.setDate(date.getDate() - i);
+            const dateString = getBerlinDate(date);
+
+            // Delete both visitor lists and detailed data
+            await env.VISITOR_COUNTER_KV.delete(`visitors-${dateString}`);
+            await env.VISITOR_COUNTER_KV.delete(`visitors-details-${dateString}`);
+            await env.VISITOR_COUNTER_KV.delete(`total-${dateString}`);
+        }
+    } catch (error) {
+        console.error('Cleanup error:', error);
+    }
 }
