@@ -2,6 +2,7 @@ export default {
     async fetch(request, env) {
         const allowedOrigins = [
             'https://frzmohammadali.github.io',
+            'https://workers-playground-flat-poetry-23ff.feed-shallow045.workers.dev',
             'http://localhost:3000',
             'http://localhost:8000',
             'http://localhost:8080',
