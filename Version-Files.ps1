@@ -23,10 +23,15 @@ function Get-TimestampHash {
 function Backup-Files {
     Write-Host "Creating backups..." -ForegroundColor Yellow
     
+    # Create bak directory if it doesn't exist
+    if (!(Test-Path "bak")) {
+        New-Item -ItemType Directory -Path "bak" -Force | Out-Null
+    }
+    
     foreach ($file in $filesToVersion) {
         $oldName = $file.OldName
         if (Test-Path $oldName) {
-            $backupName = "$oldName.backup"
+            $backupName = "bak\$oldName.backup"
             if (Test-Path $backupName) {
                 Remove-Item $backupName -Force
             }
@@ -36,7 +41,7 @@ function Backup-Files {
     }
     
     if (Test-Path $indexFile) {
-        $indexBackup = "$indexFile.backup"
+        $indexBackup = "bak\$indexFile.backup"
         if (Test-Path $indexBackup) {
             Remove-Item $indexBackup -Force
         }
@@ -44,7 +49,6 @@ function Backup-Files {
         Write-Host "  Backed up $indexFile to $indexBackup" -ForegroundColor Green
     }
 }
-
 # Function to clean up old versioned files
 function Remove-OldVersionedFiles {
     Write-Host "Cleaning up old versioned files..." -ForegroundColor Yellow
@@ -65,9 +69,14 @@ function Update-FileVersions {
     $timestampHash = Get-TimestampHash
     Write-Host "Generated timestamp hash: $timestampHash" -ForegroundColor Cyan
     
+    # Create dist directory if it doesn't exist
+    if (!(Test-Path "dist")) {
+        New-Item -ItemType Directory -Path "dist" -Force | Out-Null
+    }
+    
     $versionMappings = @{}
     
-    # Rename files with version hash
+    # Create copies with version hash in dist/ directory
     foreach ($file in $filesToVersion) {
         $oldName = $file.OldName
         $fileExtension = [System.IO.Path]::GetExtension($oldName)
@@ -78,11 +87,10 @@ function Update-FileVersions {
             # Store the mapping for reference updates
             $versionMappings[$oldName] = $newName
             
-            # Rename the file
-            Rename-Item $oldName $newName -Force
-            Write-Host "  Renamed $oldName to $newName" -ForegroundColor Green
-        }
-        else {
+            # Copy the file to dist/ directory with new name
+            Copy-Item $oldName "dist\$newName" -Force
+            Write-Host "  Copied $oldName to dist\$newName" -ForegroundColor Green
+        } else {
             Write-Host "  Warning: $oldName not found" -ForegroundColor Yellow
         }
     }
@@ -115,8 +123,7 @@ function Update-FileVersions {
         # Save the updated content
         $content | Set-Content $indexFile -Encoding UTF8
         Write-Host "  Updated $indexFile with new file references" -ForegroundColor Green
-    }
-    else {
+    } else {
         Write-Host "  Error: $indexFile not found" -ForegroundColor Red
     }
     
