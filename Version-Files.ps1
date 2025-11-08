@@ -51,15 +51,21 @@ function Backup-Files {
 }
 # Function to clean up old versioned files
 function Remove-OldVersionedFiles {
-    Write-Host "Cleaning up old versioned files..." -ForegroundColor Yellow
+    Write-Host "Cleaning up old versioned files from dist/..." -ForegroundColor Yellow
+    
+    # Check if dist directory exists
+    if (!(Test-Path "dist")) {
+        Write-Host "  dist/ directory doesn't exist, nothing to clean up" -ForegroundColor Gray
+        return
+    }
     
     foreach ($file in $filesToVersion) {
         $pattern = $file.SearchPattern
-        $oldFiles = Get-ChildItem -Path . -Filter $pattern | Where-Object { $_.Name -ne $file.OldName }
+        $oldFiles = Get-ChildItem -Path "dist" -Filter $pattern | Where-Object { $_.Name -ne $file.OldName }
         
         foreach ($oldFile in $oldFiles) {
             Remove-Item $oldFile.FullName -Force
-            Write-Host "  Removed old file: $($oldFile.Name)" -ForegroundColor Gray
+            Write-Host "  Removed old file: dist/$($oldFile.Name)" -ForegroundColor Gray
         }
     }
 }
@@ -90,7 +96,8 @@ function Update-FileVersions {
             # Copy the file to dist/ directory with new name
             Copy-Item $oldName "dist\$newName" -Force
             Write-Host "  Copied $oldName to dist\$newName" -ForegroundColor Green
-        } else {
+        }
+        else {
             Write-Host "  Warning: $oldName not found" -ForegroundColor Yellow
         }
     }
@@ -100,30 +107,34 @@ function Update-FileVersions {
         $content = Get-Content $indexFile -Raw
         
         foreach ($mapping in $versionMappings.GetEnumerator()) {
-            $oldFile = $mapping.Key
+            $oldName = $mapping.Key
             $newFile = $mapping.Value
-            
-            # Replace references in various HTML attribute formats
-            $patterns = @(
-                "`"$oldFile`"",
-                "'$oldFile'",
-                "`($oldFile`)",
-                "href=`"$oldFile`"",
-                "src=`"$oldFile`""
-            )
-            
-            foreach ($pattern in $patterns) {
-                $newPattern = $pattern.Replace($oldFile, $newFile)
-                $content = $content -replace [regex]::Escape($pattern), $newPattern
+    
+            $fileExtension = [System.IO.Path]::GetExtension($oldName)
+            $fileNameWithoutExtension = [System.IO.Path]::GetFileNameWithoutExtension($oldName)
+    
+            # Pattern to match the specific lines we want to update
+            if ($fileExtension -eq '.css') {
+                # Update CSS link: <link rel="stylesheet" href="dist/style-*.css">
+                $cssPattern = '<link rel="stylesheet" href="dist/' + $fileNameWithoutExtension + '-[^"]+\.css">'
+                $newCssLine = '<link rel="stylesheet" href="dist/' + $newFile + '">'
+                $content = $content -replace $cssPattern, $newCssLine
+                Write-Host "  Updated CSS reference to: $newCssLine" -ForegroundColor Blue
             }
-            
-            Write-Host "  Updated references from $oldFile to $newFile" -ForegroundColor Blue
+            elseif ($fileExtension -eq '.js') {
+                # Update JS script: <script src="dist/filename-*.js"></script>
+                $jsPattern = '<script src="dist/' + $fileNameWithoutExtension + '-[^"]+\.js"></script>'
+                $newJsLine = '<script src="dist/' + $newFile + '"></script>'
+                $content = $content -replace $jsPattern, $newJsLine
+                Write-Host "  Updated JS reference to: $newJsLine" -ForegroundColor Blue
+            } 
         }
-        
+
         # Save the updated content
         $content | Set-Content $indexFile -Encoding UTF8
         Write-Host "  Updated $indexFile with new file references" -ForegroundColor Green
-    } else {
+    }
+    else {
         Write-Host "  Error: $indexFile not found" -ForegroundColor Red
     }
     
