@@ -392,3 +392,33 @@ body[dir="rtl"] .lang-selector-container {
     right: auto;
     left: 20px;
 }
+
+/* Turnstile widget container styles */
+#turnstile-widget {
+    margin: 1rem 0;
+}
+
+/* Turnstile status message */
+#turnstile-status {
+    transition: all 0.3s ease;
+    max-width: 300px;
+    line-height: 1.4;
+}
+
+/* Responsive adjustments for Turnstile */
+@media (max-width: 768px) {
+    #turnstile-widget {
+        transform: scale(0.8) !important;
+    }
+}
+
+@media (max-width: 480px) {
+    #turnstile-widget {
+        transform: scale(0.7) !important;
+    }
+
+    #turnstile-status {
+        font-size: 0.8rem !important;
+        max-width: 250px;
+    }
+}

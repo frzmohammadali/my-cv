@@ -6,6 +6,9 @@ document.addEventListener('DOMContentLoaded', () => {
     initDownloadDropdown();
     initGlobalViewCounter();
 
+    // Initialize Turnstile after a short delay to ensure DOM is ready
+    setTimeout(initTurnstile, 100);
+
     // Close modal on ESC key
     document.addEventListener('keydown', (e) => {
         if (e.key === 'Escape') {
@@ -21,6 +24,29 @@ document.addEventListener('DOMContentLoaded', () => {
     });
 
 });
+
+// Initialize Cloudflare Turnstile
+function initTurnstile() {
+    // Check if Turnstile is already loaded
+    if (window.turnstile) {
+        return;
+    }
+    
+    // Add Turnstile script dynamically
+    const script = document.createElement('script');
+    script.src = 'https://challenges.cloudflare.com/turnstile/v0/api.js';
+    script.async = true;
+    script.defer = true;
+    script.onerror = () => {
+        console.error('Failed to load Cloudflare Turnstile');
+        const statusElement = document.getElementById('turnstile-status');
+        if (statusElement) {
+            statusElement.textContent = 'Failed to load security verification. Please refresh the page.';
+            statusElement.style.color = '#ef4444';
+        }
+    };
+    document.head.appendChild(script);
+}
 
 // Initialize Vanta.js background
 function initVanta() {
@@ -314,5 +340,64 @@ async function initGlobalViewCounter() {
     } catch (error) {
         console.log('Counter service unavailable');
         document.getElementById('visitorCount').textContent = '?';
+    }
+}
+
+// Turnstile callback functions
+function onTurnstileSuccess(token) {
+    console.log('Turnstile verification successful');
+    const statusElement = document.getElementById('turnstile-status');
+    if (statusElement) {
+        statusElement.textContent = 'Verification successful! Loading website...';
+        statusElement.style.color = '#10b981';
+    }
+
+    // Proceed with loading the website after successful verification
+    setTimeout(() => {
+        hideSplashScreen();
+    }, 1000);
+}
+
+function onTurnstileError() {
+    console.error('Turnstile verification failed');
+    const statusElement = document.getElementById('turnstile-status');
+    if (statusElement) {
+        statusElement.textContent = 'Verification failed. Please refresh the page and try again.';
+        statusElement.style.color = '#ef4444';
+    }
+}
+
+function onTurnstileExpired() {
+    console.log('Turnstile token expired');
+    const statusElement = document.getElementById('turnstile-status');
+    if (statusElement) {
+        statusElement.textContent = 'Verification expired. Please complete the challenge again.';
+        statusElement.style.color = '#f59e0b';
+    }
+
+    // Optionally reload the widget
+    if (window.turnstile) {
+        window.turnstile.reset();
+    }
+}
+
+
+// Modified splash screen hiding function
+function hideSplashScreen() {
+    const splash = document.getElementById('splashScreen');
+    if (splash) {
+        splash.style.opacity = '0';
+        splash.remove();
+        // Trigger the card animations after splash is gone
+        if (window.anime) {
+            anime({
+                targets: '.glass-card',
+                translateY: [50, 0],
+                opacity: [0, 1],
+                duration: 1000,
+                delay: anime.stagger(200),
+                easing: 'easeOutExpo'
+            });
+        }
     }
 }
