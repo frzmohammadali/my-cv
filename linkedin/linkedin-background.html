@@ -1,0 +1,449 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>LinkedIn Background Generator</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
+    <style>
+        body {
+            background: #111827;
+            font-family: -apple-system, BlinkMacSystemFont, "Arial", sans-serif;
+        }
+
+        .glass-card {
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+        }
+
+        .liquid-glass {
+            background: linear-gradient(135deg,
+                    rgba(59, 130, 246, 0.15) 0%,
+                    rgba(139, 92, 246, 0.15) 50%,
+                    rgba(16, 185, 129, 0.15) 100%);
+            backdrop-filter: blur(25px);
+            /* Increased blur */
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            /* More subtle border */
+            position: relative;
+            overflow: hidden;
+        }
+
+        .liquid-glass::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: linear-gradient(135deg,
+                    rgba(59, 130, 246, 0.08) 0%,
+                    transparent 50%,
+                    rgba(16, 185, 129, 0.08) 100%);
+            pointer-events: none;
+        }
+
+        #linkedin-banner {
+            width: 1584px;
+            height: 396px;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .banner-content {
+            position: relative;
+            z-index: 2;
+        }
+
+        .azure-badge {
+            transition: all 0.3s ease;
+            filter: drop-shadow(0 4px 6px rgba(0, 0, 0, 0.3));
+        }
+
+        .tech-pill {
+            transition: all 0.3s ease;
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+        }
+
+        .tech-pill:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 20px rgba(59, 130, 246, 0.3);
+        }
+
+        .gradient-text {
+            background: linear-gradient(135deg, #60a5fa 0%, #a855f7 50%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            filter: drop-shadow(0 2px 4px rgba(0, 0, 0, 0.3));
+        }
+
+        /* Ensure fonts are loaded for html2canvas */
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap');
+    </style>
+</head>
+
+<body class="min-h-screen bg-gray-900 text-gray-100 p-8">
+    <div class="container mx-auto max-w-6xl">
+        <!-- Controls -->
+        <div class="glass-card rounded-xl p-6 mb-8">
+            <h2 class="text-2xl font-bold mb-4 flex items-center">
+                <i class="fab fa-linkedin mr-3 text-blue-400"></i>
+                LinkedIn Background Generator
+            </h2>
+            <div class="flex flex-wrap gap-4">
+                <button id="generateBtn"
+                    class="px-6 py-3 bg-blue-600 hover:bg-blue-700 rounded-lg flex items-center gap-2 transition-colors">
+                    <i class="fas fa-download"></i>
+                    Download Background Image
+                </button>
+                <button id="previewBtn"
+                    class="px-6 py-3 border border-blue-400 hover:bg-blue-900/30 rounded-lg flex items-center gap-2 transition-colors">
+                    <i class="fas fa-eye"></i>
+                    Preview LinkedIn Layout
+                </button>
+            </div>
+        </div>
+
+        <!-- Banner Preview -->
+        <div class="glass-card rounded-xl p-6">
+            <h3 class="text-xl font-bold mb-4 flex items-center">
+                <i class="fas fa-image mr-2"></i>
+                Banner Preview
+            </h3>
+
+            <div id="linkedin-banner" class="mx-auto border-2 border-gray-600 rounded-lg liquid-glass">
+                <!-- Network Graph Background -->
+                <canvas id="networkCanvas" class="absolute inset-0"></canvas>
+
+                <!-- Content - Shifted to right 2/3 -->
+                <div class="banner-content absolute inset-0 flex">
+                    <!-- Left 1/3 - Empty space for profile photo -->
+                    <div class="w-1/3"></div>
+
+                    <!-- Right 2/3 - Content -->
+                    <div class="w-2/3 p-8 flex">
+                        <!-- Left Section - Profile Info -->
+                        <div class="w-2/3 pr-8 flex flex-col justify-center">
+                            <h1 class="text-5xl font-bold mb-4 gradient-text"
+                                style="font-family: 'Inter', sans-serif; font-weight: 700;">
+                                Mohammadali Forouzesh
+                            </h1>
+                            <p class="text-2xl text-blue-300 mb-6"
+                                style="font-family: 'Inter', sans-serif; font-weight: 500;">
+                                DevOps Engineer | Kubernetes Administrator | Site Reliability Engineer
+                            </p>
+
+                            <!-- Tech Stack Pills -->
+                            <div class="flex flex-wrap gap-3 mb-6">
+                                <span class="tech-pill px-4 py-2 bg-blue-900/40 rounded-full text-sm flex items-center"
+                                    style="font-family: 'Inter', sans-serif;">
+                                    <i class="fab fa-microsoft mr-2 text-blue-300"></i>Azure
+                                </span>
+                                <span class="tech-pill px-4 py-2 bg-blue-900/40 rounded-full text-sm flex items-center"
+                                    style="font-family: 'Inter', sans-serif;">
+                                    <i class="fas fa-dharmachakra mr-2 text-blue-300"></i>Kubernetes
+                                </span>
+                                <span
+                                    class="tech-pill px-4 py-2 bg-purple-900/40 rounded-full text-sm flex items-center"
+                                    style="font-family: 'Inter', sans-serif;">
+                                    <i class="fas fa-code-branch mr-2 text-purple-300"></i>DevOps
+                                </span>
+                                <span class="tech-pill px-4 py-2 bg-green-900/40 rounded-full text-sm flex items-center"
+                                    style="font-family: 'Inter', sans-serif;">
+                                    <i class="fab fa-docker mr-2 text-green-300"></i>Docker
+                                </span>
+                            </div>
+
+                            <!-- Website Link -->
+                            <div class="flex items-center gap-3 text-lg" style="font-family: 'Inter', sans-serif;">
+                                <i class="fas fa-globe text-blue-400"></i>
+                                <span class="text-gray-300">Check out my portfolio:</span>
+                                <span class="text-blue-400 font-medium">
+                                    frzmohammadali.github.io/my-cv
+                                </span>
+                            </div>
+                        </div>
+
+                        <!-- Right Section - Azure Badges -->
+                        <div class="w-1/3 flex flex-col justify-center items-center space-y-4">
+                            <h3 class="text-xl font-semibold text-blue-300 mb-2 flex items-center"
+                                style="font-family: 'Inter', sans-serif;">
+                                <i class="fas fa-award mr-2"></i>
+                                Azure Certified
+                            </h3>
+
+                            <div class="grid grid-cols-2 gap-4">
+                                <!-- DevOps Expert -->
+                                <div class="azure-badge text-center">
+                                    <img src="https://learn.microsoft.com/en-us/media/learn/certification/badges/microsoft-certified-expert-badge.svg"
+                                        alt="DevOps Engineer Expert" class="w-20 h-20 mx-auto mb-2">
+                                    <p class="text-xs text-gray-300 font-medium">DevOps Expert</p>
+                                </div>
+
+                                <!-- Solutions Architect -->
+                                <div class="azure-badge text-center">
+                                    <img src="https://learn.microsoft.com/en-us/media/learn/certification/badges/microsoft-certified-expert-badge.svg"
+                                        alt="Solutions Architect Expert" class="w-20 h-20 mx-auto mb-2">
+                                    <p class="text-xs text-gray-300 font-medium">Solutions Architect</p>
+                                </div>
+
+                                <!-- Administrator -->
+                                <div class="azure-badge text-center">
+                                    <img src="https://learn.microsoft.com/en-us/media/learn/certification/badges/microsoft-certified-associate-badge.svg"
+                                        alt="Azure Administrator" class="w-20 h-20 mx-auto mb-2">
+                                    <p class="text-xs text-gray-300 font-medium">Administrator</p>
+                                </div>
+
+                                <!-- Fundamentals -->
+                                <div class="azure-badge text-center">
+                                    <img src="https://learn.microsoft.com/en-us/media/learn/certification/badges/microsoft-certified-fundamentals-badge.svg"
+                                        alt="Azure Fundamentals" class="w-20 h-20 mx-auto mb-2">
+                                    <p class="text-xs text-gray-300 font-medium">Fundamentals</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <p class="text-center text-gray-400 mt-4 text-sm">
+                LinkedIn Banner Size: 1584 × 396 pixels • Left 1/3 reserved for profile photo
+            </p>
+        </div>
+
+        <!-- LinkedIn Preview Modal -->
+        <div id="previewModal" class="fixed inset-0 bg-black/80 hidden items-center justify-center z-50">
+            <div class="bg-white rounded-lg max-w-4xl w-full mx-4">
+                <div class="flex justify-between items-center p-4 border-b">
+                    <h3 class="text-lg font-semibold text-gray-900">LinkedIn Profile Preview</h3>
+                    <button id="closePreview" class="text-gray-500 hover:text-gray-700">
+                        <i class="fas fa-times"></i>
+                    </button>
+                </div>
+                <div class="p-6">
+                    <div class="bg-gray-100 p-4 rounded-lg">
+                        <!-- Mock LinkedIn Profile -->
+                        <div class="bg-white rounded-lg shadow-lg overflow-hidden">
+                            <!-- Banner Area -->
+                            <div class="h-48 bg-gray-200 relative">
+                                <img id="previewBanner" src="" alt="LinkedIn Banner" class="w-full h-full object-cover">
+                            </div>
+                            <!-- Profile Info -->
+                            <div class="p-6 relative">
+                                <div class="flex items-start gap-4">
+                                    <div
+                                        class="w-24 h-24 bg-gradient-to-br from-blue-400 to-purple-600 rounded-full -mt-12 border-4 border-white shadow-lg">
+                                    </div>
+                                    <div>
+                                        <h2 class="text-2xl font-bold text-gray-900">Mohammadali Forouzesh</h2>
+                                        <p class="text-gray-600">DevOps Engineer | Kubernetes Administrator | Site
+                                            Reliability Engineer</p>
+                                        <p class="text-gray-500 text-sm mt-1">Germany PR holder</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Network graph for banner background - Thicker lines, fewer dots
+        function initNetworkBackground() {
+            const canvas = document.getElementById('networkCanvas');
+            const ctx = canvas.getContext('2d');
+
+            // Set canvas size
+            canvas.width = 1584;
+            canvas.height = 396;
+
+            const points = [];
+            const connections = [];
+
+            // Create fewer points
+            for (let i = 0; i < 20; i++) { // Reduced from 35 to 20
+                points.push({
+                    x: Math.random() * canvas.width,
+                    y: Math.random() * canvas.height,
+                    vx: (Math.random() - 0.5) * 0.15,
+                    vy: (Math.random() - 0.5) * 0.15
+                });
+            }
+
+            function animate() {
+                // Clear with more transparent background
+                const gradient = ctx.createLinearGradient(0, 0, canvas.width, canvas.height);
+                gradient.addColorStop(0, 'rgba(17, 24, 39, 0.95)');
+                gradient.addColorStop(0.5, 'rgba(30, 41, 59, 0.85)');
+                gradient.addColorStop(1, 'rgba(17, 24, 39, 0.95)');
+
+                ctx.fillStyle = gradient;
+                ctx.fillRect(0, 0, canvas.width, canvas.height);
+
+                // Update points
+                points.forEach(point => {
+                    point.x += point.vx;
+                    point.y += point.vy;
+
+                    // Bounce off edges
+                    if (point.x <= 0 || point.x >= canvas.width) point.vx *= -1;
+                    if (point.y <= 0 || point.y >= canvas.height) point.vy *= -1;
+                });
+
+                // Draw connections with thicker lines
+                ctx.strokeStyle = 'rgba(59, 130, 246, 0.08)';
+                ctx.lineWidth = 1.5; // Thicker lines (increased from 0.8)
+                ctx.globalAlpha = 0.3;
+
+                for (let i = 0; i < points.length; i++) {
+                    for (let j = i + 1; j < points.length; j++) {
+                        const dx = points[i].x - points[j].x;
+                        const dy = points[i].y - points[j].y;
+                        const distance = Math.sqrt(dx * dx + dy * dy);
+
+                        if (distance < 120) { // Slightly increased connection distance
+                            const alpha = 1 - (distance / 120);
+                            ctx.strokeStyle = `rgba(59, 130, 246, ${alpha * 0.12})`; // Slightly higher opacity for thicker lines
+                            ctx.beginPath();
+                            ctx.moveTo(points[i].x, points[i].y);
+                            ctx.lineTo(points[j].x, points[j].y);
+                            ctx.stroke();
+                        }
+                    }
+                }
+
+                // Reset global alpha for points
+                ctx.globalAlpha = 0.4;
+
+                // Draw fewer points with subtle glow
+                points.forEach(point => {
+                    // Subtle glow effect
+                    const gradient = ctx.createRadialGradient(
+                        point.x, point.y, 0,
+                        point.x, point.y, 3
+                    );
+                    gradient.addColorStop(0, 'rgba(59, 130, 246, 0.4)');
+                    gradient.addColorStop(1, 'rgba(59, 130, 246, 0)');
+
+                    ctx.fillStyle = gradient;
+                    ctx.beginPath();
+                    ctx.arc(point.x, point.y, 3, 0, Math.PI * 2);
+                    ctx.fill();
+
+                    // Solid center
+                    ctx.fillStyle = 'rgba(59, 130, 246, 0.3)';
+                    ctx.beginPath();
+                    ctx.arc(point.x, point.y, 1, 0, Math.PI * 2);
+                    ctx.fill();
+                });
+
+                // Reset global alpha
+                ctx.globalAlpha = 1.0;
+
+                requestAnimationFrame(animate);
+            }
+
+            animate();
+        }
+
+        // Download banner as image
+        async function downloadBanner() {
+            const banner = document.getElementById('linkedin-banner');
+
+            // Wait a bit for fonts and styles to fully render
+            await new Promise(resolve => setTimeout(resolve, 500));
+
+            html2canvas(banner, {
+                scale: 3, // Higher resolution
+                backgroundColor: null,
+                logging: false,
+                useCORS: true,
+                allowTaint: true,
+                width: 1584,
+                height: 396,
+                onclone: function (clonedDoc) {
+                    // Ensure all styles are preserved in the clone
+                    const clonedBanner = clonedDoc.getElementById('linkedin-banner');
+                    if (clonedBanner) {
+                        clonedBanner.style.fontFamily = "'Inter', sans-serif";
+                        clonedBanner.style.visibility = 'visible';
+                        clonedBanner.style.opacity = '1';
+                    }
+                }
+            }).then(canvas => {
+                // Create a new canvas with exact dimensions
+                const finalCanvas = document.createElement('canvas');
+                finalCanvas.width = 1584;
+                finalCanvas.height = 396;
+                const ctx = finalCanvas.getContext('2d');
+
+                // Draw the captured canvas to the final canvas
+                ctx.drawImage(canvas, 0, 0, 1584, 396);
+
+                const link = document.createElement('a');
+                link.download = 'linkedin-background-mohammadali-forouzesh.png';
+                link.href = finalCanvas.toDataURL('image/png');
+                link.click();
+            }).catch(error => {
+                console.error('Error generating image:', error);
+                alert('Error generating image. Please try again.');
+            });
+        }
+
+        // Preview in LinkedIn layout
+        async function previewLinkedIn() {
+            const banner = document.getElementById('linkedin-banner');
+
+            // Preload images first
+            await preloadImages();
+
+            html2canvas(banner, {
+                scale: 1,
+                backgroundColor: null,
+                logging: false,
+                useCORS: true,
+                allowTaint: true,
+                width: 1584,
+                height: 396
+            }).then(canvas => {
+                const previewImg = document.getElementById('previewBanner');
+                previewImg.src = canvas.toDataURL('image/png');
+                document.getElementById('previewModal').classList.remove('hidden');
+            });
+        }
+
+        // Event listeners
+        document.addEventListener('DOMContentLoaded', () => {
+            initNetworkBackground();
+
+            document.getElementById('generateBtn').addEventListener('click', downloadBanner);
+            document.getElementById('previewBtn').addEventListener('click', previewLinkedIn);
+            document.getElementById('closePreview').addEventListener('click', () => {
+                document.getElementById('previewModal').classList.add('hidden');
+            });
+
+            // Close modal when clicking outside
+            document.getElementById('previewModal').addEventListener('click', (e) => {
+                if (e.target.id === 'previewModal') {
+                    document.getElementById('previewModal').classList.add('hidden');
+                }
+            });
+
+            // Preload fonts
+            const link = document.createElement('link');
+            link.href = 'https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap';
+            link.rel = 'stylesheet';
+            document.head.appendChild(link);
+        });
+    </script>
+</body>
+
+</html>
