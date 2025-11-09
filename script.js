@@ -6,8 +6,8 @@ document.addEventListener('DOMContentLoaded', () => {
     initDownloadDropdown();
     initGlobalViewCounter();
 
-    // Initialize Turnstile after a short delay to ensure DOM is ready
-    setTimeout(initTurnstile, 100);
+    // Initialize Turnstile
+    initTurnstile();
 
     // Close modal on ESC key
     document.addEventListener('keydown', (e) => {
@@ -31,7 +31,7 @@ function initTurnstile() {
     if (window.turnstile) {
         return;
     }
-    
+
     // Add Turnstile script dynamically
     const script = document.createElement('script');
     script.src = 'https://challenges.cloudflare.com/turnstile/v0/api.js';
