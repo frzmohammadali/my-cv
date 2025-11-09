@@ -6,8 +6,8 @@ document.addEventListener('DOMContentLoaded', () => {
     initDownloadDropdown();
     initGlobalViewCounter();
 
-    // Initialize Turnstile after a short delay to ensure DOM is ready
-    setTimeout(initTurnstile, 100);
+    // Initialize Turnstile
+    initTurnstile();
 
     // Close modal on ESC key
     document.addEventListener('keydown', (e) => {
@@ -27,11 +27,26 @@ document.addEventListener('DOMContentLoaded', () => {
 
 // Initialize Cloudflare Turnstile
 function initTurnstile() {
+    // Check if user has already passed verification via cookie
+    if (getCookie('turnstile_verified')) {
+        const statusElement = document.getElementById('turnstile-status');
+        if (statusElement) {
+            statusElement.textContent = 'Verification remembered! Loading website...';
+            statusElement.style.color = '#10b981';
+        }
+
+        // Keep splash screen visible for 2 seconds for cosmetic effect
+        setTimeout(() => {
+            hideSplashScreen();
+        }, 1000);
+        return;
+    }
+
     // Check if Turnstile is already loaded
     if (window.turnstile) {
         return;
     }
-    
+
     // Add Turnstile script dynamically
     const script = document.createElement('script');
     script.src = 'https://challenges.cloudflare.com/turnstile/v0/api.js';
@@ -352,6 +367,9 @@ function onTurnstileSuccess(token) {
         statusElement.style.color = '#10b981';
     }
 
+    // Set cookie valid for 24 hours
+    setCookie('turnstile_verified', '1', 24);
+
     // Proceed with loading the website after successful verification
     setTimeout(() => {
         hideSplashScreen();
@@ -400,4 +418,14 @@ function hideSplashScreen() {
             });
         }
     }
+}
+
+// Helper functions for cookies
+function setCookie(name, value, hours) {
+    const expires = new Date(Date.now() + hours * 60 * 60 * 1000).toUTCString();
+    document.cookie = `${name}=${value};expires=${expires};path=/;SameSite=Lax`;
+}
+
+function getCookie(name) {
+    return document.cookie.split('; ').find(row => row.startsWith(name + '='))?.split('=')[1];
 }
