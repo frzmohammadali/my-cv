@@ -33,19 +33,25 @@ main_skills:
 - Cloud Engineering & Microservices Architecture
 
 certifications:
+- HCLTech Aspire Journey Certified: DevSecOps and SRE Associate - Silver badge claimed
+- HCLTech Certified: Gen AI Prompt Engineering
+- HCLTech Certified: AI & Gen AI Fundamentals
 - Microsoft Certified DevOps Engineer Expert (AZ-400) | https://learn.microsoft.com/api/credentials/share/en-us/frzmohammadali/EB3F2D333BEF8965?sharingId=2F3C9C12AFDB9F4F
 - Microsoft Certified Azure Solutions Architect Expert (AZ-305) | https://learn.microsoft.com/api/credentials/share/en-us/frzmohammadali/98F753BF56B49B5F?sharingId=2F3C9C12AFDB9F4F
 - Microsoft Certified Azure Administrator Associate (AZ-104) | https://learn.microsoft.com/api/credentials/share/en-us/frzmohammadali/725F86BE587462F7?sharingId=2F3C9C12AFDB9F4F
 - Microsoft Certified Azure Fundamentals (AZ-900) | https://learn.microsoft.com/api/credentials/share/en-us/frzmohammadali/77DE12DF9C2B8514?sharingId=2F3C9C12AFDB9F4F
-- HCLTech Aspire Journey Certified: DevSecOps and SRE Associate - Silver badge claimed
-- HCLTech Certified: Gen AI Prompt Engineering
-- HCLTech Certified: AI & Gen AI Fundamentals
 - NDC conferences workshop GraphQL API - Porto 2022
 
 
 experience:
-- title: Senior DevOps Engineer | Euroclear | Brussels, Belgium (Remote)
+- title: Project Lead & Senior DevOps Consultant | HCL Technologies | Frankfurt, Germany (Remote)
   timeframe: 2023 to Present
+  achievements:
+  - Consulted as a Senior DevOps expert for client Euroclear, driving key project deliveries.
+  - Delivered on infrastructure automation, CI/CD, and monitoring solutions as outlined above.
+
+- title: Senior DevOps Engineer | Euroclear | Brussels, Belgium (Remote from Germany)
+  timeframe: 2023 to 2025
   achievements:
   - Designed and managed 10+ CI/CD pipelines in Azure DevOps for diverse application teams.
   - Developed and maintained 5+ Infrastructure as Code (IaC) repositories using Terraform.
@@ -54,13 +60,7 @@ experience:
   - Led and participated in 15+ production release and launch cycles.
   - Facilitated post-incident reviews and root cause analysis meetings.
 
-- title: Project Lead & Senior DevOps Consultant | HCL Technologies | Frankfurt, Germany (Remote)
-  timeframe: 2023 to Present
-  achievements:
-  - Consulted as a Senior DevOps expert for client Euroclear, driving key project deliveries.
-  - Delivered on infrastructure automation, CI/CD, and monitoring solutions as outlined above.
-
-- title: Senior Software/DevOps Engineer | matelso GmbH | Kaiserslautern, Germany
+- title: Senior Software/DevOps Engineer | matelso GmbH | Kaiserslautern, Germany (on site)
   timeframe: 2021 to 2023
   achievements:
   - Architected and maintained core backend GraphQL APIs for a SaaS platform.
@@ -71,7 +71,7 @@ experience:
   - Established monitoring, logging, and alerting systems for Kubernetes infrastructure.
   - Performed cluster maintenance, troubleshooting, and Linux server administration.
 
-- title: Software Engineer & Research Assistant | Max Planck Institute | Kaiserslautern, Germany
+- title: Software Engineer & Research Assistant | Max Planck Institute | Kaiserslautern, Germany (on site)
   timeframe: 2018 to 2020
   achievements:
   - Developed interactive data visualization dashboards using Python and web technologies.
