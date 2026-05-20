@@ -3,8 +3,8 @@ const translations = {
     en: {
         // Header
         "name": "Mohammadali Forouzesh",
-        "title": "DevOps Engineer | Kubernetes Administrator | Site Reliability Engineer",
-        "pr-status": "Germany PR holder",
+        "title": "Site Reliability Engineer | DevOps Engineer | Kubernetes Administrator",
+        "pr-status": "German Passport holder",
         "download-cv": "Download CV",
         "pdf-version": "PDF Version",
         "yaml-version": "YAML Version",
@@ -12,7 +12,7 @@ const translations = {
         "email-label": "Email:",
         "phone-label": "Phone:",
         "click-to-reveal": "click to reveal!",
-        "last-updated": "Last updated: November 2025",
+        "last-updated": "Last updated: May 2026",
 
         // Sections
         "about-me": "About Me",
@@ -45,6 +45,15 @@ const translations = {
         "location-frankfurt": "Frankfurt, Germany",
         "exp-hcl-1": "Consulted as a Senior DevOps expert for client Euroclear, driving key project deliveries",
         "exp-hcl-2": "Delivered infrastructure automation, CI/CD, and monitoring solutions",
+
+        "position-sre-sap": "Site Reliability Engineer",
+        "company-sap": "SAP",
+        "location-walldorf": "Walldorf, Germany",
+        "duration-2026-present": "2026 - Present",
+        "exp-sap-1": "Leading the EU based SRE team",
+        "exp-sap-2": "Incident and problem management",
+        "exp-sap-3": "Toil automation",
+        "exp-sap-4": "SRE shift roaster management",
 
         "position-senior-software": "Senior Software/DevOps Engineer",
         "company-matelso": "matelso GmbH",
@@ -103,8 +112,8 @@ const translations = {
     de: {
         // Header
         "name": "Mohammadali Forouzesh",
-        "title": "DevOps Engineer | Kubernetes Administrator | Site Reliability Engineer",
-        "pr-status": "Niederlassungserlaubnis für Deutschland",
+        "title": "Site Reliability Engineer | DevOps Engineer | Kubernetes Administrator",
+        "pr-status": "Deutscher Passinhaber",
         "download-cv": "Lebenslauf herunterladen (EN)",
         "pdf-version": "PDF Version",
         "yaml-version": "YAML Version",
@@ -112,7 +121,7 @@ const translations = {
         "email-label": "E-Mail:",
         "phone-label": "Telefon:",
         "click-to-reveal": "zum Anzeigen!",
-        "last-updated": "Zuletzt aktualisiert: November 2025",
+        "last-updated": "Zuletzt aktualisiert: Mai 2026",
 
         // Sections
         "about-me": "Über mich",
@@ -145,6 +154,15 @@ const translations = {
         "location-frankfurt": "Frankfurt, Deutschland",
         "exp-hcl-1": "Beratung als Senior DevOps Experte für Kunde Euroclear, Umsetzung wichtiger Projektlieferungen",
         "exp-hcl-2": "Bereitstellung von Infrastrukturautomatisierung, CI/CD und Monitoring-Lösungen",
+
+        "position-sre-sap": "Site Reliability Engineer",
+        "company-sap": "SAP",
+        "location-walldorf": "Walldorf, Deutschland",
+        "duration-2026-present": "2026 - Heute",
+        "exp-sap-1": "Leitung des EU-basierten SRE-Teams",
+        "exp-sap-2": "Incident- und Problemmanagement",
+        "exp-sap-3": "Toil-Automatisierung",
+        "exp-sap-4": "SRE-Schichtplanmanagement",
 
         "position-senior-software": "Senior Software/DevOps Engineer",
         "company-matelso": "matelso GmbH",

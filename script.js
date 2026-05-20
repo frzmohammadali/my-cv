@@ -7,7 +7,9 @@ document.addEventListener('DOMContentLoaded', () => {
     initGlobalViewCounter();
 
     // Initialize Turnstile
-    initTurnstile();
+    // CAPTCHA DISABLED TEMPORARILY - Remove comment tags below to re-enable
+    //// initTurnstile();
+    initTurnstileDISABLED();
 
     // Close modal on ESC key
     document.addEventListener('keydown', (e) => {
@@ -61,6 +63,22 @@ function initTurnstile() {
         }
     };
     document.head.appendChild(script);
+}
+
+// Initialize Cloudflare Turnstile DISABLED
+function initTurnstileDISABLED() {
+    setTimeout(() => {
+        const statusElement = document.getElementById('turnstile-status');
+        if (statusElement) {
+            statusElement.textContent = 'Verification completed! Loading website...';
+            statusElement.style.color = '#10b981';
+        }
+        setTimeout(() => {
+            hideSplashScreen();
+        }, 1000);
+    }, 500);
+
+    return;
 }
 
 // Initialize Vanta.js background

@@ -48,7 +48,16 @@ experience:
   timeframe: 2023 to Present
   achievements:
   - Consulted as a Senior DevOps expert for client Euroclear, driving key project deliveries.
+  - Consulted as a Site Reliability Engineer for client SAP, leading the EU based SRE team.
   - Delivered on infrastructure automation, CI/CD, and monitoring solutions as outlined above.
+
+- title: Site Reliability Engineer | SAP | Walldorf, Germany (Remote)
+  timeframe: 2026 to Present
+  achievements:
+  - Leading the EU based SRE team
+  - Incident and problem management
+  - Toil automation
+  - SRE shift roaster management
 
 - title: Senior DevOps Engineer | Euroclear | Brussels, Belgium (Remote from Germany)
   timeframe: 2023 to 2025
