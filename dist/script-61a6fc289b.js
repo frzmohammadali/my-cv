@@ -70,7 +70,7 @@ function initTurnstileDISABLED() {
     setTimeout(() => {
         const statusElement = document.getElementById('turnstile-status');
         if (statusElement) {
-            statusElement.textContent = 'Verification completed! Loading website...';
+            statusElement.textContent = 'Loading completed!';
             statusElement.style.color = '#10b981';
         }
         setTimeout(() => {
